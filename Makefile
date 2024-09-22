@@ -6,7 +6,7 @@
 #    By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/22 03:16:02 by joapedr2          #+#    #+#              #
-#    Updated: 2024/09/22 03:28:06 by joapedr2         ###   ########.fr        #
+#    Updated: 2024/09/22 20:07:39 by joapedr2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,6 @@ fclean: clean
 re:	fclean $(NAME)
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all -q ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -q ./$(NAME)
 	
 .PHONY: all clean fclean re valgrind
