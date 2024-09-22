@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 02:50:07 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 20:09:29 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CONFIGSERVER_HPP
 
 # include "Webserv.hpp"
-# include "FileParser.hpp"
 
 typedef struct	s_listen {
 	unsigned int	host;
@@ -23,8 +22,23 @@ typedef struct	s_listen {
 
 class ConfigServer {
 public:
-	ConfigServer();
+	~ConfigServer(void);
+	ConfigServer(fileVector file);
+	
+	fileVector	parseServer(const std::string configText);
 
+	// std::string	grapServers(const std::string configText);
+	// void	grapListen(const std::string configText);
+	// void	grapRoot(const std::string configText);
+	// void	grapServerName(const std::string configText);
+	// void	grapErrorPages(const std::string configText);
+	// void	grapClienteBodyBuffer(const std::string configText);
+	// void	grapAllowedMethods(const std::string configText);
+	// void	grapIndex(const std::string configText);
+	// void	grapAutoIndex(const std::string configText);
+	// void	grapLocation(const std::string configText);
+//	void	grapCGIParam(const std::string configText);
+//	void	grapCGIPass(const std::string configText);
 
 private:
 	std::string	_serverText;

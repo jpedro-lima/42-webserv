@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 00:06:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 16:27:37 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 19:28:20 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ public:
 
 
 private:
-	std::string	_configText;
-	fileVector	_fileVector;
-
+	std::string					_configText;
+	fileVector					_fileVector;
 	std::vector<ConfigServer>	_servers;
+	
+	fileVector	Config::parse(fileVector configVector);
+	
 };
 
 #endif //CONFIG_H
