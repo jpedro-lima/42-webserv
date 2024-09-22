@@ -6,16 +6,20 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/19 14:02:08 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 02:50:07 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONFIGSERVER_HPP
 # define CONFIGSERVER_HPP
 
+# include "Webserv.hpp"
 # include "FileParser.hpp"
 
-typedef struct	s_listen t_listen;
+typedef struct	s_listen {
+	unsigned int	host;
+	int				port;
+}				t_listen;
 
 class ConfigServer {
 public:
@@ -24,7 +28,6 @@ public:
 
 private:
 	std::string	_serverText;
-	size_t		sizeServer;
 
 	static	parseMap	_serverParsingMap;
 	static	parseMap	_locationParsingMap;
