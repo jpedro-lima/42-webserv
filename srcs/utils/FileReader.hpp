@@ -6,34 +6,24 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 23:18:32 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 05:15:08 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:44:41 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILEREADER_HPP
 # define FILEREADER_HPP
 
-#include "Webserv.hpp"
+# include "Webserv.hpp"
 
-class FileReader {
-public:
-	FileReader(const char *filename);
-	~FileReader(void);
+typedef std::vector<std::string> fileVector;
 
-	static std::string	readFile(const char *filename);
-	std::string	getFullFileText(void) const;
+namespace FileReader {
 
-	class	FileNotFoundException: public std::exception{
-		virtual const char	*what() const throw();
-	};
+	std::string	readFile(const char *filename);
+	fileVector	split(std::string fileText, const std::string charset);
 
-	class	ConfigFileErrorException: public std::exception{
-		virtual const char	*what() const throw();
-	};
-private:
-	std::string	_fullFile;
-
-	void		checkerConfigFile(void) const;
+	void		checkerConfigFile(const std::string fileText) ;
 };
+
 
 #endif //FILEREADER_HPP
