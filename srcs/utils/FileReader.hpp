@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 23:18:32 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/20 23:16:18 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 05:15:08 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ public:
 	FileReader(const char *filename);
 	~FileReader(void);
 
-	std::string			readFile(const char *filename);
-	
-	const std::string	getFullFile(void) const;
+	static std::string	readFile(const char *filename);
+	std::string	getFullFileText(void) const;
 
 	class	FileNotFoundException: public std::exception{
 		virtual const char	*what() const throw();
@@ -34,7 +33,7 @@ public:
 private:
 	std::string	_fullFile;
 
-	bool		checkerConfigFile(const std::string file);
+	void		checkerConfigFile(void) const;
 };
 
 #endif //FILEREADER_HPP
