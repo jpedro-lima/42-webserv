@@ -6,12 +6,16 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 16:43:39 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 20:36:21 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WEBSERV_HPP
 # define WEBSERV_HPP
+
+#ifndef LOCALHOST
+# define LOCALHOST	0x7f000001
+#endif //LOCALHOST
 
 // Colors
 # define RED	"\033[31m"
@@ -41,10 +45,10 @@
 // My namespaces
 # include "Utils.hpp"
 # include "FileReader.hpp"
+# include "Exceptions.hpp"
 
 
 // My Classes
-# include "Exceptions.hpp"
 
 typedef	std::vector<std::string>	fileVector;
 
