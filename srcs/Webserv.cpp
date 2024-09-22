@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:56:13 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 05:01:56 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:50:25 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,20 @@ int main(int argc, const char **argv) {
 		// catch (std::exception &e) {
 		// 	std::cerr << e.what() << std::endl;
 		// }
+		try {
+			std::string teste = FileReader::readFile(argv[1]);
+			FileReader::checkerConfigFile(teste);
 
-		std::string teste = FileReader::readFile(argv[1]);
+			fileVector fileTest = FileReader::split(teste, " \f\n\r\t\v");
 
-		std::cout << teste << std::endl;
+			std::cout << teste << std::endl;
+			for (size_t i = 0; i < fileTest.size(); i++)
+				std::cout << fileTest[i] << std::endl;
+		}
+		catch (const std::exception &e) {
+			std::cerr << RED << e.what() << RESET << std::endl;	
+		}
+
 	}
 	else
 	{
