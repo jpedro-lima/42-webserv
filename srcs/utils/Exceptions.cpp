@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 20:22:57 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/23 22:51:34 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ const char	*Exceptions::ConfigFileEmptyException::what() const throw() {
 }
 
 const char	*Exceptions::ExpectedCurlyBracketsAfter::what() const throw() {
-	return "Error: expected '{' after server directive.";
+	return "Exception thrown: expected '{' after server directive.";
 }
 
 const char	*Exceptions::ExpectedCurlyBracketsBefore::what() const throw() {
-	return "Error: expected '{' after server directive.";
+	return "Exception thrown: Expected '}' at end of directive.";
+}
+
+
+const char	*Exceptions::ExceptionInvalidArguments::what() const throw() {
+	return "Exception thrown: the argument for this directive is invalid.";
 }

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 20:20:15 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/23 22:52:00 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ public:
 	};
 	
 	class	ExpectedCurlyBracketsBefore: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+	
+	class	ExceptionInvalidArguments: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
