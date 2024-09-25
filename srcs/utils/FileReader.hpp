@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 23:18:32 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 16:44:41 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:11:52 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 # define FILEREADER_HPP
 
 # include "Webserv.hpp"
-
-typedef std::vector<std::string> fileVector;
+typedef	std::vector<std::string>	fileVector;
 
 namespace FileReader {
 
