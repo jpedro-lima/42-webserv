@@ -6,11 +6,13 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:56:13 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 16:50:25 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:47:20 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Webserv.hpp"
+
+class	Config;
 
 int main(int argc, const char **argv) {
 	if (argc == 2)
@@ -28,17 +30,12 @@ int main(int argc, const char **argv) {
 		// 	std::cerr << e.what() << std::endl;
 		// }
 		try {
-			std::string teste = FileReader::readFile(argv[1]);
-			FileReader::checkerConfigFile(teste);
-
-			fileVector fileTest = FileReader::split(teste, " \f\n\r\t\v");
-
-			std::cout << teste << std::endl;
-			for (size_t i = 0; i < fileTest.size(); i++)
-				std::cout << fileTest[i] << std::endl;
+//			std::string teste = FileReader::readFile(argv[1]);
+			Config config(argv[1]);
 		}
 		catch (const std::exception &e) {
-			std::cerr << RED << e.what() << RESET << std::endl;	
+			std::cerr << RED << e.what() << RESET << std::endl;
+			return (1);
 		}
 
 	}
@@ -47,5 +44,5 @@ int main(int argc, const char **argv) {
 		std::cerr << RED << "Invalid number of arguments." << RESET << std::endl;
 		return (1);
 	}
-	return 0;
+	return (0);
 }

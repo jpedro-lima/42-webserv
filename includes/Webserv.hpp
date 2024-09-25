@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 20:36:21 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:16:28 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@
 # include "FileReader.hpp"
 # include "Exceptions.hpp"
 
-
 // My Classes
+# include "Config.hpp"
+# include "ConfigServer.hpp"
 
-typedef	std::vector<std::string>	fileVector;
+
 
 #endif //WEBSERV_HPP
