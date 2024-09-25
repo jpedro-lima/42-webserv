@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/23 22:51:34 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:41:28 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ const char	*Exceptions::ExpectedCurlyBracketsBefore::what() const throw() {
 
 const char	*Exceptions::ExceptionInvalidArguments::what() const throw() {
 	return "Exception thrown: the argument for this directive is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidAllowMethod::what() const throw() {
+	return "Exception thrown: the argument in Allow Method is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidServerName::what() const throw() {
+	return "Exception thrown: the argument in ServerName is invalid.";
 }

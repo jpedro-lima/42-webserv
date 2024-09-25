@@ -6,10 +6,9 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/23 22:52:00 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:40:15 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef EXCEPTIONS_HPP
 # define EXCEPTIONS_HPP
@@ -44,6 +43,16 @@ public:
 	};
 	
 	class	ExceptionInvalidArguments: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionInvalidAllowMethod: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionInvalidServerName: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
