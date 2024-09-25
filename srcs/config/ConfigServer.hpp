@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/23 22:41:40 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:54:24 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "Webserv.hpp"
 
+typedef	std::vector<std::string>	fileVector;
 # define parseMap std::map<std::string, void (ConfigServer::*)(fileVector)>
+
 
 typedef struct	s_listen {
 	unsigned int	host;
@@ -25,27 +27,27 @@ typedef struct	s_listen {
 class ConfigServer {
 public:
 	~ConfigServer(void);
-	ConfigServer(fileVector file, size_t index);
+	ConfigServer(void);
 	
-	void     ConfigServer::parseServer(size_t &index, fileVector &file);
+	void    parseServer(fileVector file, size_t *index);
 
-	void	grapListen(fileVector configText);
-	void	grapRoot(fileVector configText);
-	void	grapServerName(fileVector configText);
-	void	grapErrorPages(fileVector configText);
-	void	grapClienteBodyBuffer(fileVector configText);
-	void	grapAllowedMethods(fileVector configText);
-	void	grapIndex(fileVector configText);
-	void	grapAutoIndex(fileVector configText);
-	void	grapLocation(fileVector configText);
-//	void	grapCGIParam(fileVector configText);
-//	void	grapCGIPass(fileVector configText);
+	void	grapListen(std::vector<std::string> args);
+	void	grapRoot(std::vector<std::string> args);
+	void	grapServerName(std::vector<std::string> args);
+	void	grapErrorPages(std::vector<std::string> args);
+	void	grapClientBodyBufferSize(std::vector<std::string> args);
+	void	grapAllowedMethods(std::vector<std::string> args);
+	void	grapIndex(std::vector<std::string> args);
+	void	grapAutoIndex(std::vector<std::string> args);
+	void	grapLocation(std::vector<std::string> args);
+//	void	grapCGIParam(std::vector<std::string> args);
+//	void	grapCGIPass(std::vector<std::string> args);
 
 private:
 	std::string	_serverText;
 
-	static	parseMap	_serverParsingMap;
-	static	parseMap	_locationParsingMap;
+	parseMap	_serverParsingMap;
+	parseMap	_locationParsingMap;
 
 	std::vector<t_listen>				_listen;
 	std::string							_root;
@@ -57,8 +59,7 @@ private:
 	bool								_autoindex;
 	std::map<std::string, ConfigServer>	_location;
 
-	std::string methodes[] = {"GET", "POST", "DELETE", "HEAD" , "PUT", "OPTIONS", "TRACE", "PATCH"};
-	
+	parseMap _initParseMap();
 };
 
 #endif //CONFIGSERVER_HPP
