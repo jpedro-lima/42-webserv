@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 14:52:16 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:07:29 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,14 @@ namespace ConfigAdd {
 	}
 
 	void	autoIndex(ConfigServer *server, fileVector args){
-		std::cout << "grapAutoIndex" << std::endl;
-		(void)args;
-		(void)server;
+		if (args.empty() || args.size() > 1)
+			throw Exceptions::ExceptionInvalidAutoIndex();
+		if (args[0] == "on" || args[0] == "true")
+			server->setAutoIndex(true);
+		else if (args[0] == "off" || args[0] == "false")
+			server->setAutoIndex(false);
+		else
+			throw Exceptions::ExceptionInvalidAutoIndex();
 	}
 
 	void	location(ConfigServer *server, fileVector args){

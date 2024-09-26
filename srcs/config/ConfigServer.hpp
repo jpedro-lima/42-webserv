@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 14:52:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:01:45 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ public:
 	void	setErrorPages(std::map<int, std::string> errorPages);
 	void	setBufferSize(int bufferSize);
 	void	setAllowedMethods(std::set<std::string> methods);
-	void	setAutoIndex(std::vector<std::string> index);
-	void	setLocation(bool autoIndex);
-	void	setIndex(std::map<std::string, ConfigServer> location);
+	void	setIndex(std::vector<std::string> index);
+	void	setAutoIndex(bool autoIndex);
+	void	setLocation(std::map<std::string, ConfigServer> location);
 
 //STREAM
 	friend std::ostream	&operator<<(std::ostream &out, const ConfigServer &server);

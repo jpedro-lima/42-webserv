@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/25 17:16:28 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:54:14 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,16 @@
 // My namespaces
 # include "Utils.hpp"
 # include "FileReader.hpp"
-# include "Exceptions.hpp"
 
 // My Classes
+# include "Exceptions.hpp"
 # include "Config.hpp"
 # include "ConfigServer.hpp"
 
-
+// Structs
+typedef struct	s_listen {
+	unsigned int	host;
+	int				port;
+}				t_listen;
 
 #endif //WEBSERV_HPP

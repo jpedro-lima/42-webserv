@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 15:44:01 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:02:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ ConfigServer::ConfigServer(void){
 	this->_error_pages = ConfigDefault::defaultErrorPages();
 	this->_client_body_buffer_size = 10000000;
 	this->_allowed_methods = ConfigDefault::defaultAllowMethods();
-	this->_autoindex = "off";
+	this->_autoindex = false;
 	this->_location.clear();
 	this->_serverParsingMap = this->_initParseMap();
 	this->_locationParsingMap = this->_initParseMap();
@@ -35,12 +35,12 @@ parseMap ConfigServer::_initParseMap() {
 	myMap["server_name"] = &ConfigAdd::serverName;
 	myMap["error_page"] = &ConfigAdd::errorPages;
 	myMap["client_body_buffer_size"] = &ConfigAdd::clientBodyBufferSize;
-	// myMap["cgi_param"] = &ConfigAdd::cgiParam;
-	// myMap["cgi_pass"] = &ConfigAdd::cgiPass;
 	myMap["allow_methods"] = &ConfigAdd::allowedMethods;
 	myMap["index"] = &ConfigAdd::index;
 	myMap["autoindex"] = &ConfigAdd::autoIndex;
 	myMap["location"] = &ConfigAdd::location;
+	// myMap["cgi_param"] = &ConfigAdd::cgiParam;
+	// myMap["cgi_pass"] = &ConfigAdd::cgiPass;
 	return (myMap);
 }
 
@@ -80,9 +80,9 @@ void	ConfigServer::setServerName(std::vector<std::string> serverName) {this->_se
 void	ConfigServer::setErrorPages(std::map<int, std::string> errorPages) {this->_error_pages = errorPages;}
 void	ConfigServer::setBufferSize(int bufferSize) {this->_client_body_buffer_size = bufferSize;}
 void	ConfigServer::setAllowedMethods(std::set<std::string> methods) {this->_allowed_methods = methods;}
-void	ConfigServer::setAutoIndex(std::vector<std::string> index) {this->_index = index;}
-void	ConfigServer::setLocation(bool autoIndex) {this->_autoindex = autoIndex;}
-void	ConfigServer::setIndex(std::map<std::string, ConfigServer> location) {this->_location = location;}
+void	ConfigServer::setIndex(std::vector<std::string> index) {this->_index = index;}
+void	ConfigServer::setAutoIndex(bool autoIndex) {this->_autoindex = autoIndex;}
+void	ConfigServer::setLocation(std::map<std::string, ConfigServer> location) {this->_location = location;}
 
 //STREAM
 std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
