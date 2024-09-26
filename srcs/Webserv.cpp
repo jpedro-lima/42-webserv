@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:56:13 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/25 17:47:20 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:43:00 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int main(int argc, const char **argv) {
 		try {
 //			std::string teste = FileReader::readFile(argv[1]);
 			Config config(argv[1]);
+			std::vector<ConfigServer> servers = config.getServers();
+			for (std::vector<ConfigServer>::iterator i = servers.begin(); i != servers.end(); i++)
+				std::cout << *i << std::endl;
 		}
 		catch (const std::exception &e) {
 			std::cerr << RED << e.what() << RESET << std::endl;
