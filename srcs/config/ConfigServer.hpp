@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/25 16:54:24 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:52:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 # define CONFIGSERVER_HPP
 
 # include "Webserv.hpp"
+# include "ConfigServerUtils.hpp"
 
 typedef	std::vector<std::string>	fileVector;
-# define parseMap std::map<std::string, void (ConfigServer::*)(fileVector)>
+typedef struct	s_listen			t_listen;
 
-
-typedef struct	s_listen {
-	unsigned int	host;
-	int				port;
-}				t_listen;
+# define parseMap std::map<std::string, void (*)(ConfigServer *, fileVector)>
 
 class ConfigServer {
 public:
@@ -31,17 +28,19 @@ public:
 	
 	void    parseServer(fileVector file, size_t *index);
 
-	void	grapListen(std::vector<std::string> args);
-	void	grapRoot(std::vector<std::string> args);
-	void	grapServerName(std::vector<std::string> args);
-	void	grapErrorPages(std::vector<std::string> args);
-	void	grapClientBodyBufferSize(std::vector<std::string> args);
-	void	grapAllowedMethods(std::vector<std::string> args);
-	void	grapIndex(std::vector<std::string> args);
-	void	grapAutoIndex(std::vector<std::string> args);
-	void	grapLocation(std::vector<std::string> args);
-//	void	grapCGIParam(std::vector<std::string> args);
-//	void	grapCGIPass(std::vector<std::string> args);
+//SET
+	void	setListen(std::vector<t_listen> listen);
+	void	setRoot(std::string root);
+	void	setServerName(std::vector<std::string> serverName);
+	void	setErrorPages(std::map<int, std::string> errorPages);
+	void	setBufferSize(int bufferSize);
+	void	setAllowedMethods(std::set<std::string> methods);
+	void	setAutoIndex(std::vector<std::string> index);
+	void	setLocation(bool autoIndex);
+	void	setIndex(std::map<std::string, ConfigServer> location);
+
+//STREAM
+	friend std::ostream	&operator<<(std::ostream &out, const ConfigServer &server);
 
 private:
 	std::string	_serverText;
@@ -61,5 +60,6 @@ private:
 
 	parseMap _initParseMap();
 };
+
 
 #endif //CONFIGSERVER_HPP

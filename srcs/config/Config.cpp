@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 03:07:41 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/25 17:47:06 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:39:32 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,9 @@ void	Config::parser(fileVector file) {
 			this->_servers.push_back(server);
 		}
 	}
+}
+
+// GETS
+std::vector<ConfigServer>	Config::getServers(void) const {
+	return(this->_servers);
 }

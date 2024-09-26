@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 00:06:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/25 17:16:12 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:37:28 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ class Config {
 public:
 	~Config(void);
 	Config(const char *configPath);
+
+	std::vector<ConfigServer>	getServers(void) const;
 
 private:
 	std::string					_configText;
