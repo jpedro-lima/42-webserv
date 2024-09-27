@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 14:54:14 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:11:04 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define WEBSERV_HPP
 
 #ifndef LOCALHOST
-# define LOCALHOST	0x7f000001
+# define LOCALHOST	"127.0.0.1"
 #endif //LOCALHOST
 
 // Colors
@@ -53,8 +53,8 @@
 
 // Structs
 typedef struct	s_listen {
-	unsigned int	host;
-	int				port;
+	std::string	host;
+	int			port;
 }				t_listen;
 
 #endif //WEBSERV_HPP
