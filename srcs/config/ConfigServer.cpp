@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 16:02:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:06:45 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 ConfigServer::~ConfigServer() {};
 
 ConfigServer::ConfigServer(void){
-	this->_listen.push_back(ConfigDefault::defaultListen());
+	this->_listen.clear();
 	this->_root.clear();
 	this->_index.clear();
 	this->_server_name.push_back("Default");
@@ -30,17 +30,17 @@ ConfigServer::ConfigServer(void){
 
 parseMap ConfigServer::_initParseMap() {
 	parseMap	myMap;
-	myMap["listen"] = &ConfigAdd::listen;
-	myMap["root"] = &ConfigAdd::root;
-	myMap["server_name"] = &ConfigAdd::serverName;
-	myMap["error_page"] = &ConfigAdd::errorPages;
-	myMap["client_body_buffer_size"] = &ConfigAdd::clientBodyBufferSize;
-	myMap["allow_methods"] = &ConfigAdd::allowedMethods;
-	myMap["index"] = &ConfigAdd::index;
-	myMap["autoindex"] = &ConfigAdd::autoIndex;
-	myMap["location"] = &ConfigAdd::location;
-	// myMap["cgi_param"] = &ConfigAdd::cgiParam;
-	// myMap["cgi_pass"] = &ConfigAdd::cgiPass;
+	myMap["listen"] = &ConfigAdd::addListen;
+	myMap["root"] = &ConfigAdd::addRoot;
+	myMap["server_name"] = &ConfigAdd::addServerName;
+	myMap["error_page"] = &ConfigAdd::addErrorPages;
+	myMap["client_body_buffer_size"] = &ConfigAdd::addClientBodyBufferSize;
+	myMap["allow_methods"] = &ConfigAdd::addAllowedMethods;
+	myMap["index"] = &ConfigAdd::addIndex;
+	myMap["autoindex"] = &ConfigAdd::addAutoIndex;
+	myMap["location"] = &ConfigAdd::addLocation;
+	// myMap["cgi_param"] = &ConfigAdd::addCGIParam;
+	// myMap["cgi_pass"] = &ConfigAdd::addCGIPass;
 	return (myMap);
 }
 
@@ -50,6 +50,7 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 	
 	while (++(*index) < file.size())
 	{
+		std::cout << file[*index] << std::endl;
 		if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
 			if (!directive.empty()) {
 				this->_serverParsingMap[directive](this, args);
@@ -75,6 +76,7 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 }
 
 //SET
+void	ConfigServer::setListen(std::vector<t_listen> listen) {this->_listen = listen;}
 void	ConfigServer::setRoot(std::string root) {this->_root = root;}
 void	ConfigServer::setServerName(std::vector<std::string> serverName) {this->_server_name = serverName;}
 void	ConfigServer::setErrorPages(std::map<int, std::string> errorPages) {this->_error_pages = errorPages;}
@@ -83,6 +85,17 @@ void	ConfigServer::setAllowedMethods(std::set<std::string> methods) {this->_allo
 void	ConfigServer::setIndex(std::vector<std::string> index) {this->_index = index;}
 void	ConfigServer::setAutoIndex(bool autoIndex) {this->_autoindex = autoIndex;}
 void	ConfigServer::setLocation(std::map<std::string, ConfigServer> location) {this->_location = location;}
+
+//GET
+const std::vector<t_listen>					&ConfigServer::getListen(void) const {return (this->_listen);}
+const std::string							&ConfigServer::getRoot(void) const {return (this->_root);}
+const std::vector<std::string>				&ConfigServer::getServerName(void) const {return (this->_server_name);}
+const std::map<int, std::string>			&ConfigServer::getErrorPages(void) const {return (this->_error_pages);}
+const int									&ConfigServer::getBufferSize(void) const {return (this->_client_body_buffer_size);}
+const std::set<std::string>					&ConfigServer::getAllowedMethods(void) const {return (this->_allowed_methods);}
+const std::vector<std::string>				&ConfigServer::getIndex(void) const {return (this->_index);}
+const bool									&ConfigServer::getAutoIndex(void) const {return (this->_autoindex);}
+const std::map<std::string, ConfigServer>	&ConfigServer::getLocation(void) const {return (this->_location);}
 
 //STREAM
 std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
@@ -110,7 +123,7 @@ std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
 	
 	out << "client_body_buffer_size: " << server._client_body_buffer_size << std::endl;
 	
-	out << "autoindex " << (server._autoindex ? "on" : "off") << std::endl;
+	out << "autoindex: " << (server._autoindex ? "on" : "off") << std::endl;
 	
 	out << "index: ";
 	for (fileVector::const_iterator i = server._index.begin(); i != server._index.end(); i++)

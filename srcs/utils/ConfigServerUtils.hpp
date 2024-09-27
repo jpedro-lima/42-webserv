@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ConfigArgs.hpp                                     :+:      :+:    :+:   */
+/*   ConfigServerUtils.hpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:20:09 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 14:51:20 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:40:15 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ namespace ConfigDefault {
 };
 
 namespace ConfigAdd {
-	void	listen(ConfigServer *server, fileVector args);
-	void	root(ConfigServer *server, fileVector args);
-	void	serverName(ConfigServer *server, fileVector args);
-	void	errorPages(ConfigServer *server, fileVector args);
-	void	clientBodyBufferSize(ConfigServer *server, fileVector args);
-	void	allowedMethods(ConfigServer *server, fileVector args);
-	void	index(ConfigServer *server, fileVector args);
-	void	autoIndex(ConfigServer *server, fileVector args);
-	void	location(ConfigServer *server, fileVector args);
-//	void	cgiParam(ConfigServer *server, fileVector args);
-//	void	cgiPass(ConfigServer *server, fileVector args);
+	void	addListen(ConfigServer *server, fileVector args);
+	void	addRoot(ConfigServer *server, fileVector args);
+	void	addServerName(ConfigServer *server, fileVector args);
+	void	addErrorPages(ConfigServer *server, fileVector args);
+	void	addClientBodyBufferSize(ConfigServer *server, fileVector args);
+	void	addAllowedMethods(ConfigServer *server, fileVector args);
+	void	addIndex(ConfigServer *server, fileVector args);
+	void	addAutoIndex(ConfigServer *server, fileVector args);
+	void	addLocation(ConfigServer *server, fileVector args);
+//	void	addCGIParam(ConfigServer *server, fileVector args);
+//	void	addCGIPass(ConfigServer *server, fileVector args);
 };
 
 #endif //CONFIGARGS_HPP

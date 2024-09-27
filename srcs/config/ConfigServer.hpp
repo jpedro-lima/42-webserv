@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 16:01:45 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:50:46 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ public:
 	void	setIndex(std::vector<std::string> index);
 	void	setAutoIndex(bool autoIndex);
 	void	setLocation(std::map<std::string, ConfigServer> location);
+//GET
+	const std::vector<t_listen>					&getListen(void) const;
+	const std::string							&getRoot(void) const;
+	const std::vector<std::string>				&getServerName(void) const;
+	const std::map<int, std::string>			&getErrorPages(void) const;
+	const int									&getBufferSize(void) const;
+	const std::set<std::string>					&getAllowedMethods(void) const;
+	const std::vector<std::string>				&getIndex(void) const;
+	const bool									&getAutoIndex(void) const;
+	const std::map<std::string, ConfigServer>	&getLocation(void) const;
 
 //STREAM
 	friend std::ostream	&operator<<(std::ostream &out, const ConfigServer &server);

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 15:56:29 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:34:57 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ public:
 	public:
 		virtual const char	*what() const throw();
 	};
-	
+
+	class		ExceptionInvalidListenArgs: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
 };
 
 #endif //EXCEPTIONS_HPP

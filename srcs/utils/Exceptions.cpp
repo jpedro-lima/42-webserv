@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 15:57:16 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:35:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,9 @@ const char	*Exceptions::ExceptionInvalidServerName::what() const throw() {
 
 const char	*Exceptions::ExceptionInvalidAutoIndex::what() const throw() {
 	return "Exception thrown: the argument in AutoIndex is invalid.";
+}
+
+
+const char	*Exceptions::ExceptionInvalidListenArgs::what() const throw() {
+	return "Exception thrown: the argument in Listen is invalid.";
 }

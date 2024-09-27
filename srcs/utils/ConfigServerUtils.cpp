@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/26 16:07:29 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:05:39 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,36 @@ namespace ConfigDefault {
 
 namespace ConfigAdd {
 
-	void	listen(ConfigServer *server, fileVector args){
-		std::cout << "grapListen" << std::endl;
-		(void)args;
-		(void)server;
+	void	addListen(ConfigServer *server, fileVector args){
+		if (args.empty() || args.size() > 1)
+			throw Exceptions::ExceptionInvalidListenArgs();
+
+		t_listen temp;
+		size_t sep = args[0].find(":");
+		if(sep != std::string::npos) {
+			temp.host = args[0].substr(0, sep);
+			temp.port = std::atoi((args[0].substr(sep + 1, args[0].length()).c_str()));
+		} else {
+			temp.port = 80;
+			if (args[0].find(".") != std::string::npos || args[0] == "localhost")
+				temp.host = args[0];
+			else
+				temp.port = std::atoi(args[0].c_str());
+		}
+		if(temp.host == "localhost")
+			temp.host = LOCALHOST;
+		std::vector<t_listen> listen = server->getListen();
+		listen.push_back(temp);
+		server->setListen(listen);
 	}
 
-	void	root(ConfigServer *server, fileVector args){
+	void	addRoot(ConfigServer *server, fileVector args){
 		std::cout << "grapRoot" << std::endl;
 		(void)args;
 		(void)server;
 	}
 
-	void	serverName(ConfigServer *server, fileVector args){
+	void	addServerName(ConfigServer *server, fileVector args){
 		std::vector<std::string> serverName;
 
 		if (args.empty())
@@ -71,19 +88,19 @@ namespace ConfigAdd {
 		server->setServerName(serverName);
 	}
 
-	void	errorPages(ConfigServer *server, fileVector args){
+	void	addErrorPages(ConfigServer *server, fileVector args){
 		std::cout << "grapErrorPages" << std::endl;
 		(void)args;
 		(void)server;
 	}
 
-	void	clientBodyBufferSize(ConfigServer *server, fileVector args){
+	void	addClientBodyBufferSize(ConfigServer *server, fileVector args){
 		std::cout << "grapClienteBodyBuffer" << std::endl;
 		(void)args;
 		(void)server;
 	}
 
-	void	allowedMethods(ConfigServer *server, fileVector args){
+	void	addAllowedMethods(ConfigServer *server, fileVector args){
 		std::string methods[] = {"GET", "POST", "DELETE", "HEAD", "PUT", "OPTIONS", "TRACE", "PATCH"};
 		std::set<std::string> allowedMethods;
 
@@ -96,20 +113,20 @@ namespace ConfigAdd {
 					found = true;
 			}
 			if (found)
-			allowedMethods.insert(*itr);
+				allowedMethods.insert(*itr);
 			else
 				throw Exceptions::ExceptionInvalidAllowMethod();
 		}
 		server->setAllowedMethods(allowedMethods);
 	}
 
-	void	index(ConfigServer *server, fileVector args){
+	void	addIndex(ConfigServer *server, fileVector args){
 		std::cout << "grapIndex" << std::endl;
 		(void)args;
 		(void)server;
 	}
 
-	void	autoIndex(ConfigServer *server, fileVector args){
+	void	addAutoIndex(ConfigServer *server, fileVector args){
 		if (args.empty() || args.size() > 1)
 			throw Exceptions::ExceptionInvalidAutoIndex();
 		if (args[0] == "on" || args[0] == "true")
@@ -120,7 +137,7 @@ namespace ConfigAdd {
 			throw Exceptions::ExceptionInvalidAutoIndex();
 	}
 
-	void	location(ConfigServer *server, fileVector args){
+	void	addLocation(ConfigServer *server, fileVector args){
 		std::cout << "grapLocation" << std::endl;
 		(void)args;
 		(void)server;
