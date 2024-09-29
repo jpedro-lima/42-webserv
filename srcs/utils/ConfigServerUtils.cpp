@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 11:03:01 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:15:54 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ namespace ConfigAdd {
 	}
 
 	void	addClientBodyBufferSize(ConfigServer *server, fileVector args){
-		std::cout << "grapClienteBodyBuffer" << std::endl;
-		(void)args;
-		(void)server;
+		if (args.empty() || server->getBufferSize() != 10000000)
+			throw Exceptions::ExceptionInvalidClientBodyBufferSize();
+		server->setBufferSize(std::atoi(args[0].c_str()));
 	}
 
 	void	addAllowedMethods(ConfigServer *server, fileVector args){
@@ -124,9 +124,13 @@ namespace ConfigAdd {
 	}
 
 	void	addIndex(ConfigServer *server, fileVector args){
-		std::cout << "grapIndex" << std::endl;
-		(void)args;
-		(void)server;
+		std::vector<std::string> index;
+
+		if (args.empty())
+			throw Exceptions::ExceptionInvalidIndexArgs();
+		for (size_t i = 0; i < args.size(); i++)
+			index.push_back(args[i]);
+		server->setIndex(index);
 	}
 
 	void	addAutoIndex(ConfigServer *server, fileVector args){

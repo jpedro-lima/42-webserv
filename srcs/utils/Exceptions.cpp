@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 10:32:00 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:40:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,16 @@ const char	*Exceptions::ExceptionInvalidRootArgs::what() const throw() {
 
 const char	*Exceptions::ExceptionInvalidErrorPageArgs::what() const throw() {
 	return "Exception thrown: the argument in Error Page is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidClientBodyBufferSize::what() const throw() {
+	return "Exception thrown: the argument in Client Body Buffer Size is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidIndexArgs::what() const throw() {
+	return "Exception thrown: the argument in Index is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidLocationMethod::what() const throw() {
+	return "Exception thrown: the Method in Location is invalid.";
 }

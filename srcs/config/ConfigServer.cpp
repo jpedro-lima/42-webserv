@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/28 22:29:00 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:39:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,57 @@ int	ConfigServer::parseServer(fileVector file, size_t *index) {
 			throw Exceptions::ExpectedCurlyBracketsBefore();
 		while (++(*index) < file.size())
 		{
-				if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
-					if (!directive.empty()) {
-						this->_serverParsingMap[directive](this, args);
-						args.clear();
-					}
-					directive = file[(*index)];
+			if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
+				if (!directive.empty()) {
+					this->_serverParsingMap[directive](this, args);
+					args.clear();
 				}
-				else if (file[*index] == "}") {
-						if (!args.empty())
-							this->_serverParsingMap[directive](this, args);
-						break ;
-				} else {
-					args.push_back(file[*index]);
-				}
+				directive = file[(*index)];
+			}
+			else if (file[*index] == "}") {
+				if (!args.empty())
+					this->_serverParsingMap[directive](this, args);
+				break ;
+			} 
+			else if(file[*index] == "location")
+				this->_parseLocation(file, index);
+			else
+				args.push_back(file[*index]);
 		}
 	} catch (const std::exception &e) {
 		std::cerr << RED << e.what() << RESET << std::endl;
 		return (1);
 	}
 	return (0);
+}
+
+void	ConfigServer::_parseLocation(fileVector file, size_t *index) {
+	try {
+		if (file[++(*index)] != "{")
+			throw Exceptions::ExpectedCurlyBracketsBefore();
+		while (++(*index) < file.size())
+		{
+			if (this->_locationParsingMap.find(file[*index]) != this->_locationParsingMap.end()) {
+				if (!directive.empty()) {
+					this->_locationParsingMap[directive](this, args);
+					args.clear();
+				}
+				directive = file[(*index)];
+			}
+			else if (file[*index] == "}") {
+				if (!args.empty())
+					this->_locationParsingMap[directive](this, args);
+				break ;
+			} 
+			else if(file[*index] == "location")
+				throw Exceptions::ExceptionInvalidLocationMethod();
+			else
+				args.push_back(file[*index]);
+		}
+	} catch (const std::exception &e) {
+		std::cerr << RED << e.what() << RESET << std::endl;
+		throw ;
+	}
 }
 
 //SET
