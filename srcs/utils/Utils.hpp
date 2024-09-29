@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:33:44 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/23 22:58:58 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 10:40:52 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 namespace Utils {
 	bool	isspace(int c);
 	size_t	findMembers(const std::string str, const std::string here);
-	
+	bool	isdigit(std::string str);
 }

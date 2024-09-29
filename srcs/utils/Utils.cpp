@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:40:52 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/22 13:20:29 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 10:41:48 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,13 @@ namespace Utils {
 			pos++;
 		}
 		return (std::string::npos);
+	}
+
+	bool	isdigit(std::string str) {
+		for (size_t i = 0; i < str.length(); i++) {
+			if (!std::isdigit(str[i]))
+				return (false);
+		}
+		return (true);
 	}
 }
