@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/27 10:34:57 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 10:31:28 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,17 @@ public:
 	public:
 		virtual const char	*what() const throw();
 	};
+	
+	class		ExceptionInvalidRootArgs: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class		ExceptionInvalidErrorPageArgs: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+	
 };
 
 #endif //EXCEPTIONS_HPP

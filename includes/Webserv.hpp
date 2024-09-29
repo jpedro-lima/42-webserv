@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/27 12:11:04 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 10:55:31 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define YELLOW	"\033[33m"
 # define RESET	"\033[0m"
 
+// C Includes
+#include <sys/stat.h>
+#include <unistd.h>
 
 // CPP Includes
 # include <iostream>

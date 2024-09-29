@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/27 17:05:39 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 11:03:01 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ namespace ConfigAdd {
 	}
 
 	void	addRoot(ConfigServer *server, fileVector args){
-		std::cout << "grapRoot" << std::endl;
-		(void)args;
-		(void)server;
+		if (args.empty() || server->getRoot() != "")
+			throw Exceptions::ExceptionInvalidRootArgs();
+		server->setRoot(args[0]);
 	}
 
 	void	addServerName(ConfigServer *server, fileVector args){
@@ -89,9 +89,12 @@ namespace ConfigAdd {
 	}
 
 	void	addErrorPages(ConfigServer *server, fileVector args){
-		std::cout << "grapErrorPages" << std::endl;
-		(void)args;
-		(void)server;
+		if (args.empty() || args.size() > 2
+			|| !Utils::isdigit(args[0]) || access(args[1].c_str(), F_OK ) == -1)
+			throw Exceptions::ExceptionInvalidErrorPageArgs();
+		std::map<int, std::string> error_page = server->getErrorPages();
+		error_page[std::atoi(args[0].c_str())] = args[1];
+		server->setErrorPages(error_page);
 	}
 
 	void	addClientBodyBufferSize(ConfigServer *server, fileVector args){

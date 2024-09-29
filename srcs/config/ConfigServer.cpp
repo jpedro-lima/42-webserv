@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/27 17:06:45 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/28 22:29:00 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,35 @@ parseMap ConfigServer::_initParseMap() {
 	return (myMap);
 }
 
-void	ConfigServer::parseServer(fileVector file, size_t *index) {
+int	ConfigServer::parseServer(fileVector file, size_t *index) {
 	fileVector			args;
 	std::string			directive;
 	
-	while (++(*index) < file.size())
-	{
-		std::cout << file[*index] << std::endl;
-		if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
-			if (!directive.empty()) {
-				this->_serverParsingMap[directive](this, args);
-				args.clear();
-			}
-			directive = file[(*index)];
+	try {
+		if (file[++(*index)] != "{")
+			throw Exceptions::ExpectedCurlyBracketsBefore();
+		while (++(*index) < file.size())
+		{
+				if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
+					if (!directive.empty()) {
+						this->_serverParsingMap[directive](this, args);
+						args.clear();
+					}
+					directive = file[(*index)];
+				}
+				else if (file[*index] == "}") {
+						if (!args.empty())
+							this->_serverParsingMap[directive](this, args);
+						break ;
+				} else {
+					args.push_back(file[*index]);
+				}
 		}
-		else if (file[*index] == "}") {
-			try {
-				if (!args.empty())
-					this->_serverParsingMap[directive](this, args);
-				break ;
-			}
-			catch (const std::exception &e) {
-				std::cerr << RED << e.what() << RESET << std::endl;
-				return ;
-			}
-		}
-		else {
-			args.push_back(file[*index]);
-		}
+	} catch (const std::exception &e) {
+		std::cerr << RED << e.what() << RESET << std::endl;
+		return (1);
 	}
+	return (0);
 }
 
 //SET
