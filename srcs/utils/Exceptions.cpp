@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 12:40:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 23:28:00 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,8 @@ const char	*Exceptions::ExceptionInvalidIndexArgs::what() const throw() {
 
 const char	*Exceptions::ExceptionInvalidLocationMethod::what() const throw() {
 	return "Exception thrown: the Method in Location is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidServerMethod::what() const throw() {
+	return "Exception thrown: the Method in Server is invalid.";
 }

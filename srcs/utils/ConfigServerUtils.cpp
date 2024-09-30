@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 12:15:54 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 23:29:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,41 @@ namespace ConfigAdd {
 	}
 
 	void	addLocation(ConfigServer *server, fileVector args){
-		std::cout << "grapLocation" << std::endl;
-		(void)args;
-		(void)server;
+		std::string							locationPath;
+		fileVector							locationArgs;
+		std::string							directive;
+		parseMap							locationParsingMap;
+		ConfigServer						temp;
+
+		locationParsingMap = server->getServerParsingMap();
+		if (args[1] != "{")
+			throw Exceptions::ExceptionInvalidLocationMethod();
+		try {
+			for (size_t index = 0; index < args.size(); index++)
+			{
+				if (locationParsingMap.find(args[index]) != locationParsingMap.end()) {
+					if (!directive.empty()) {
+						locationParsingMap[directive](&temp, locationArgs);
+						locationArgs.clear();
+					}
+					directive = args[index];
+				}
+				else if (args[index] == "}") {
+					if (directive.empty())
+						throw Exceptions::ExceptionInvalidLocationMethod();
+					if (!locationArgs.empty())
+						locationParsingMap[directive](&temp, locationArgs);
+					break ;
+				} 
+				else
+					locationArgs.push_back(args[index]);
+			}
+		} catch (const std::exception &e) {
+			std::cerr << RED << e.what() << RESET << std::endl;
+			throw ;
+		}
+		std::map<std::string, ConfigServer>	location = server->getLocation();
+		location[args[0]] = temp;
+		server->setLocation(location);
 	}
 }

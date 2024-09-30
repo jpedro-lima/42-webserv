@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 12:39:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 23:29:56 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ ConfigServer::ConfigServer(void){
 	this->_autoindex = false;
 	this->_location.clear();
 	this->_serverParsingMap = this->_initParseMap();
-	this->_locationParsingMap = this->_initParseMap();
 }
 
 parseMap ConfigServer::_initParseMap() {
@@ -59,14 +58,20 @@ int	ConfigServer::parseServer(fileVector file, size_t *index) {
 					args.clear();
 				}
 				directive = file[(*index)];
+				if (directive == "location") {
+					while (file[++(*index)] != "}")
+						args.push_back(file[*index]);
+					args.push_back(file[*index]);
+					this->_serverParsingMap["location"](this, args);
+				}
 			}
 			else if (file[*index] == "}") {
+				if (directive.empty())
+					Exceptions::ExceptionInvalidServerMethod();
 				if (!args.empty())
 					this->_serverParsingMap[directive](this, args);
 				break ;
 			} 
-			else if(file[*index] == "location")
-				this->_parseLocation(file, index);
 			else
 				args.push_back(file[*index]);
 		}
@@ -77,34 +82,35 @@ int	ConfigServer::parseServer(fileVector file, size_t *index) {
 	return (0);
 }
 
-void	ConfigServer::_parseLocation(fileVector file, size_t *index) {
-	try {
-		if (file[++(*index)] != "{")
-			throw Exceptions::ExpectedCurlyBracketsBefore();
-		while (++(*index) < file.size())
-		{
-			if (this->_locationParsingMap.find(file[*index]) != this->_locationParsingMap.end()) {
-				if (!directive.empty()) {
-					this->_locationParsingMap[directive](this, args);
-					args.clear();
-				}
-				directive = file[(*index)];
-			}
-			else if (file[*index] == "}") {
-				if (!args.empty())
-					this->_locationParsingMap[directive](this, args);
-				break ;
-			} 
-			else if(file[*index] == "location")
-				throw Exceptions::ExceptionInvalidLocationMethod();
-			else
-				args.push_back(file[*index]);
-		}
-	} catch (const std::exception &e) {
-		std::cerr << RED << e.what() << RESET << std::endl;
-		throw ;
-	}
-}
+// void	ConfigServer::_parseLocation(fileVector file, size_t *index) {
+// 	try {
+// 		std::string		locationPath = file[++(*index)];
+// 		if (file[++(*index)] == "{")
+// 			throw Exceptions::ExpectedCurlyBracketsBefore();
+// 		while (++(*index) < file.size())
+// 		{
+// 			if (this->_locationParsingMap.find(file[*index]) != this->_locationParsingMap.end()) {
+// 				if (!directive.empty()) {
+// 					this->_locationParsingMap[directive](this, args);
+// 					args.clear();
+// 				}
+// 				directive = file[(*index)];
+// 			}
+// 			else if (file[*index] == "}") {
+// 				if (!args.empty())
+// 					this->_locationParsingMap[directive](this, args);
+// 				break ;
+// 			} 
+// 			else if(file[*index] == "location")
+// 				throw Exceptions::ExceptionInvalidLocationMethod();
+// 			else
+// 				args.push_back(file[*index]);
+// 		}
+// 	} catch (const std::exception &e) {
+// 		std::cerr << RED << e.what() << RESET << std::endl;
+// 		throw ;
+// 	}
+// }
 
 //SET
 void	ConfigServer::setListen(std::vector<t_listen> listen) {this->_listen = listen;}
@@ -127,6 +133,7 @@ const std::set<std::string>					&ConfigServer::getAllowedMethods(void) const {re
 const std::vector<std::string>				&ConfigServer::getIndex(void) const {return (this->_index);}
 const bool									&ConfigServer::getAutoIndex(void) const {return (this->_autoindex);}
 const std::map<std::string, ConfigServer>	&ConfigServer::getLocation(void) const {return (this->_location);}
+const parseMap								&ConfigServer::getServerParsingMap(void) const {return (this->_serverParsingMap);}
 
 //STREAM
 std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
@@ -162,10 +169,10 @@ std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
 	out << std::endl;
 	
 	// out << "alias: " << server._alias << std::endl;
-	// for (std::map<std::string, ConfigServer>::const_iterator i = server._location.begin(); i != server._location.end(); i++) {
-	// 	out << std::endl << "LOCATION " << i->first << std::endl;
-	// 	out << i->second << std::endl;
-	// }
+	for (std::map<std::string, ConfigServer>::const_iterator i = server._location.begin(); i != server._location.end(); i++) {
+		out << std::endl << "LOCATION: " << i->first << std::endl;
+		out << i->second << std::endl;
+	}
 	
 	// out << "cgi_param:" << std::endl;
 	// for (std::map<std::string, std::string>::const_iterator i = server._cgi_param.begin(); i != server._cgi_param.end(); i++)

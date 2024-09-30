@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 12:30:14 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/29 23:33:31 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ public:
 	~ConfigServer(void);
 	ConfigServer(void);
 	
-	int    parseServer(fileVector file, size_t *index);
+	int	parseServer(fileVector file, size_t *index);
+
 
 //SET
 	void	setListen(std::vector<t_listen> listen);
@@ -48,15 +49,14 @@ public:
 	const std::vector<std::string>				&getIndex(void) const;
 	const bool									&getAutoIndex(void) const;
 	const std::map<std::string, ConfigServer>	&getLocation(void) const;
+	const parseMap								&getServerParsingMap(void) const;
 
 //STREAM
 	friend std::ostream	&operator<<(std::ostream &out, const ConfigServer &server);
 
 private:
 	std::string	_serverText;
-
 	parseMap	_serverParsingMap;
-	parseMap	_locationParsingMap;
 
 	std::vector<t_listen>				_listen;
 	std::string							_root;
@@ -69,7 +69,6 @@ private:
 	std::map<std::string, ConfigServer>	_location;
 
 	parseMap	_initParseMap();
-	void		_parseLocation(fileVector file, size_t *index);
 };
 
 
