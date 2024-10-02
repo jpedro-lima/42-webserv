@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 10:55:31 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:56:40 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@
 
 // My Classes
 # include "Exceptions.hpp"
-# include "Config.hpp"
-# include "ConfigServer.hpp"
 
 // Structs
 typedef struct	s_listen {
