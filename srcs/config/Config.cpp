@@ -6,13 +6,15 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 03:07:41 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 10:21:52 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:05:50 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Config.hpp"
+# include "Config.hpp"
 
-Config::~Config(void) {};
+Config::~Config(void) {}
+
+Config::Config(void) {}
 
 Config::Config(const char *configPath) {
 	try {
@@ -41,4 +43,10 @@ void	Config::parser(fileVector file) {
 // GETS
 std::vector<ConfigServer>	Config::getServers(void) const {
 	return(this->_servers);
+}
+
+Config	*Config::operator=(const Config *config) {
+	if (this != config)
+		this->_servers = (*config)._servers;
+	return (this);
 }

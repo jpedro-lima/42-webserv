@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 23:29:56 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:12:28 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 ConfigServer::~ConfigServer() {};
 
 ConfigServer::ConfigServer(void){
-	this->_listen.clear();
+	this->_listen = ConfigDefault::defaultListen();
 	this->_root.clear();
 	this->_index.clear();
 	this->_server_name.push_back("Default");
