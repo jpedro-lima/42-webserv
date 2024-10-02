@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:20:09 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 22:47:55 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:44:01 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 # define CONFIGARGS_HPP
 
 # include "Webserv.hpp"
+# include "ConfigServer.hpp"
 
-typedef struct	s_listen	t_listen;
+typedef struct	s_listen			t_listen;
+typedef	std::vector<std::string>	fileVector;
+
 class ConfigServer;
 
 namespace ConfigDefault {

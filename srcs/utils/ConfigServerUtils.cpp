@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 23:29:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:55:56 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ConfigDefault {
 	t_listen	defaultListen(void) {
 		t_listen listen;
 		listen.port = 80;
-		listen.host = LOCALHOST;
+		listen.host = "";
 		return (listen);
 	}
 
@@ -53,7 +53,7 @@ namespace ConfigAdd {
 		if (args.empty() || args.size() > 1)
 			throw Exceptions::ExceptionInvalidListenArgs();
 
-		t_listen temp;
+		t_listen temp = ConfigDefault::defaultListen();
 		size_t sep = args[0].find(":");
 		if(sep != std::string::npos) {
 			temp.host = args[0].substr(0, sep);
@@ -65,9 +65,15 @@ namespace ConfigAdd {
 			else
 				temp.port = std::atoi(args[0].c_str());
 		}
+		if (temp.host == "0.0.0.0")
+			temp.host = "";
 		if(temp.host == "localhost")
 			temp.host = LOCALHOST;
 		std::vector<t_listen> listen = server->getListen();
+		for (std::vector<t_listen>::iterator i = listen.begin(); i != listen.end(); i++) {
+			if (i->host == temp.host && i->port == temp.port)
+				throw Exceptions::ExceptionInvalidListenArgs();
+		}
 		listen.push_back(temp);
 		server->setListen(listen);
 	}
@@ -98,7 +104,8 @@ namespace ConfigAdd {
 	}
 
 	void	addClientBodyBufferSize(ConfigServer *server, fileVector args){
-		if (args.empty() || server->getBufferSize() != 10000000)
+		if (args.empty() || server->getBufferSize() != 10000000 
+			|| args.size() > 1 || !Utils::isdigit(args[0]) )
 			throw Exceptions::ExceptionInvalidClientBodyBufferSize();
 		server->setBufferSize(std::atoi(args[0].c_str()));
 	}
@@ -175,7 +182,6 @@ namespace ConfigAdd {
 					locationArgs.push_back(args[index]);
 			}
 		} catch (const std::exception &e) {
-			std::cerr << RED << e.what() << RESET << std::endl;
 			throw ;
 		}
 		std::map<std::string, ConfigServer>	location = server->getLocation();

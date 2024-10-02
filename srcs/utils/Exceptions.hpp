@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 23:28:07 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:17:17 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,22 @@ public:
 		virtual const char	*what() const throw();
 	};
 
-	class		ExceptionInvalidListenArgs: public std::exception{
+	class	ExceptionInvalidListenArgs: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
 	
-	class		ExceptionInvalidRootArgs: public std::exception{
+	class	ExceptionInvalidListenServers: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
 
-	class		ExceptionInvalidErrorPageArgs: public std::exception{
+	class	ExceptionInvalidRootArgs: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionInvalidErrorPageArgs: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
@@ -82,17 +87,32 @@ public:
 		virtual const char	*what() const throw();
 	};
 
-	class		ExceptionInvalidIndexArgs: public std::exception{
+	class	ExceptionInvalidIndexArgs: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
 
-	class		ExceptionInvalidLocationMethod: public std::exception{
+	class	ExceptionInvalidLocationMethod: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
 
-	class		ExceptionInvalidServerMethod: public std::exception{
+	class	ExceptionInvalidServerMethod: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionServiceSocket: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+	
+	class	ExceptionServerBind: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionServerListen: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
