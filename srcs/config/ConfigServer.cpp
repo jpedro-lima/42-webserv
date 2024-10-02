@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/02 10:12:28 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:03:42 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 ConfigServer::~ConfigServer() {};
 
 ConfigServer::ConfigServer(void){
-	this->_listen = ConfigDefault::defaultListen();
+	this->_listen.clear();
 	this->_root.clear();
 	this->_index.clear();
 	this->_server_name.push_back("Default");
@@ -43,7 +43,7 @@ parseMap ConfigServer::_initParseMap() {
 	return (myMap);
 }
 
-int	ConfigServer::parseServer(fileVector file, size_t *index) {
+void	ConfigServer::parseServer(fileVector file, size_t *index) {
 	fileVector			args;
 	std::string			directive;
 	
@@ -75,11 +75,7 @@ int	ConfigServer::parseServer(fileVector file, size_t *index) {
 			else
 				args.push_back(file[*index]);
 		}
-	} catch (const std::exception &e) {
-		std::cerr << RED << e.what() << RESET << std::endl;
-		return (1);
-	}
-	return (0);
+	} catch (const std::exception &) {throw;}
 }
 
 // void	ConfigServer::_parseLocation(fileVector file, size_t *index) {

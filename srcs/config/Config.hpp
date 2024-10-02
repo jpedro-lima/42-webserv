@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 00:06:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/01 10:05:39 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:00:24 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "Webserv.hpp"
 # include "ConfigServer.hpp"
 
+typedef struct	s_listen	t_listen;
+
 class Config {
 public:
 	~Config(void);
@@ -23,6 +25,7 @@ public:
 	Config(const char *configPath);
 
 	std::vector<ConfigServer>	getServers(void) const;
+	std::vector<t_listen>		getAllListens(void) const;
 
 	Config	*operator=(const Config *config);
 private:
@@ -31,7 +34,7 @@ private:
 	std::vector<ConfigServer>	_servers;
 	
 	void	parser(fileVector file);
-
+	void	checkServers(void);
 };
 
 #endif //CONFIG_H

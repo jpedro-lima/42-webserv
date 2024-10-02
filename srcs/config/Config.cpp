@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 03:07:41 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/01 10:05:50 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:06:27 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,55 @@ Config::Config(const char *configPath) {
 		this->_configText = FileReader::readFile(configPath);
 		this->_fileVector = FileReader::split(this->_configText, " \f\n\r\t\v\0");
 		Config::parser(this->_fileVector);
+		Config::checkServers();
 	}
 	catch (const std::exception &e) {
-		std::cerr << RED << e.what() << RESET << std::endl;
+		if (this->_servers.size() > 0)
+			this->_servers.clear();
+		throw;
 	}
 }
 
 void	Config::parser(fileVector file) {
-	for (size_t i = 0; i < file.size(); i++) {
-		if (file[i] == "server") {
-			ConfigServer  server;
-			if (server.parseServer(file, &(i)) != 0){
-				this->_servers.clear();
-				return ;
+	try {
+		for (size_t i = 0; i < file.size(); i++) {
+			if (file[i] == "server") {
+				ConfigServer  server;
+				server.parseServer(file, &(i));
+				this->_servers.push_back(server);
 			}
-			this->_servers.push_back(server);
+		}
+	}
+	catch (const std::exception &){throw;}
+}
+
+void	Config::checkServers() {
+	std::vector<t_listen> listens = this->getAllListens();
+	std::vector<t_listen>::iterator	i;
+	std::vector<t_listen>::iterator	j;
+
+	for (i = listens.begin(); i != listens.end(); i++) {
+		for (j = listens.begin(); j != listens.end(); j++) {
+			if (j == i) {continue;}
+			if (i->host == j->host && i->port == j->port)	
+				throw Exceptions::ExceptionInvalidListenServers();
 		}
 	}
 }
 
 // GETS
-std::vector<ConfigServer>	Config::getServers(void) const {
-	return(this->_servers);
-}
+std::vector<ConfigServer>	Config::getServers(void) const {return(this->_servers);}
+
+std::vector<t_listen>		Config::getAllListens(void) const {
+	std::vector<t_listen>	ret;
+	for (std::vector<ConfigServer>::const_iterator server = this->_servers.begin(); server != this->_servers.end(); server++) {
+		std::vector<t_listen>	serverListen = server->getListen();
+		for (std::vector<t_listen>::iterator listen = serverListen.begin(); listen != serverListen.end(); listen++) {
+			ret.push_back(*listen);
+		}
+	}
+	return (ret);
+};
 
 Config	*Config::operator=(const Config *config) {
 	if (this != config)

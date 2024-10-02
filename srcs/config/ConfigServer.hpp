@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 23:33:31 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:03:50 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ public:
 	~ConfigServer(void);
 	ConfigServer(void);
 	
-	int	parseServer(fileVector file, size_t *index);
-
+	void	parseServer(fileVector file, size_t *index);
 
 //SET
 	void	setListen(std::vector<t_listen> listen);
