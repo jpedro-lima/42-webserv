@@ -6,7 +6,7 @@
 #    By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/22 03:16:02 by joapedr2          #+#    #+#              #
-#    Updated: 2024/10/02 11:19:14 by joapedr2         ###   ########.fr        #
+#    Updated: 2024/10/03 16:45:14 by joapedr2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ SERVER_DIR	= server/
 SRC_LIST	= $(UTILS_DIR)Exceptions.cpp			$(UTILS_DIR)Utils.cpp			\
 			  $(UTILS_DIR)ConfigServerUtils.cpp		$(UTILS_DIR)FileReader.cpp		\
 			  $(CONFIG_DIR)ConfigServer.cpp			$(CONFIG_DIR)Config.cpp			\
+			  $(SERVER_DIR)Server.cpp				$(SERVER_DIR)Service.cpp		\
 			  main.cpp
-#			  $(SERVER_DIR)Service.cpp				$(SERVER_DIR)Server.cpp			\
 
 SRCS		= $(addprefix $(SRC_DIR), $(SRC_LIST)) 
 

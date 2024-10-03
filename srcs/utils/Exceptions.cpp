@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/02 11:16:47 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:24:55 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ const char	*Exceptions::ExceptionInvalidServerMethod::what() const throw() {
 	return "Exception ConfigFile: the Method in Server is invalid.";
 }
 
-const char	*Exceptions::ExceptionServiceSocket::what() const throw() {
+const char	*Exceptions::ExceptionServerSocket::what() const throw() {
 	return "Exception Server: Could not create Service.";
 }
 
@@ -90,4 +90,8 @@ const char	*Exceptions::ExceptionServerBind::what() const throw() {
 
 const char	*Exceptions::ExceptionServerListen::what() const throw() {
 	return "Exception Server: Could not listen.";
+}
+
+const char	*Exceptions::ExceptionServiceServer::what() const throw() {
+	return "Exception Server: Could not setup Server services.";
 }

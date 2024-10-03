@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/02 11:55:56 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:45:02 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ namespace ConfigAdd {
 			else
 				temp.port = std::atoi(args[0].c_str());
 		}
-		if (temp.host == "0.0.0.0")
-			temp.host = "";
+		if (temp.host.empty())
+			temp.host = "0.0.0.0";
 		if(temp.host == "localhost")
 			temp.host = LOCALHOST;
 		std::vector<t_listen> listen = server->getListen();

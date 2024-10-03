@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/30 16:56:40 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:34:15 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,16 @@
 # define RED	"\033[31m"
 # define GREEN	"\033[32m"
 # define YELLOW	"\033[33m"
+# define BLUE	"\033[34m"
 # define RESET	"\033[0m"
+# define GREY	"\033[38;5;8m"
 
 // C Includes
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 // CPP Includes
 # include <iostream>

@@ -15,7 +15,7 @@
 
 # include "Webserv.hpp"
 # include "Config.hpp"
-# include "Service.hpp"
+# include "Server.hpp"
 
 class Service {
 public:
@@ -25,10 +25,9 @@ public:
 	void	config(const char *filePath);
 	void	setup(void);
 	void	run(void);
-	void	clean(void);
+	void	clear(void);
 
 	const Config	&getConfig(void) const;
-
 private:
 
 	Config					_config;

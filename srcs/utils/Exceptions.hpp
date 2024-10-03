@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/02 11:17:17 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:25:01 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ public:
 		virtual const char	*what() const throw();
 	};
 
-	class	ExceptionServiceSocket: public std::exception{
+	class	ExceptionServerSocket: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
@@ -113,6 +113,11 @@ public:
 	};
 
 	class	ExceptionServerListen: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionServiceServer: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};
