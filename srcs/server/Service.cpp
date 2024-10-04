@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:30 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 17:50:08 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/03 22:52:13 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	Service::setup(void) {
 		this->_servers.insert(std::make_pair(fd, server));
 		if (fd > _max_fd)
 			_max_fd = fd;
-		std::cout << "--------------------------------" << std::endl;
+		std::cout << "---------------------------------------" << std::endl;
 		std::cout <<GREY<< "\tSetting up " <<BLUE<< lstn->host
 			<<GREY<<":" <<BLUE<< lstn->port <<GREY<< "..." <<RESET<< std::endl;
 	}

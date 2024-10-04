@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:35 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 17:54:58 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/03 22:49:56 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ Server::Server(t_listen listen) {
 	this->_addr.sin_addr.s_addr = INADDR_ANY;
 	if (this->_listen.host != "0.0.0.0" )
 		this->_addr.sin_addr.s_addr = inet_addr(this->_listen.host.c_str());
-	std::cout << this->_listen.host << " : " << this->_listen.port << std::endl;
 }
 
 void	Server::setup(void)
