@@ -17,6 +17,9 @@
 # include "Config.hpp"
 # include "Server.hpp"
 
+#include <stdio.h>
+#include <string.h>
+
 class Service {
 public:
 	~Service(void);
@@ -34,9 +37,13 @@ private:
 	std::map<int, Server>	_servers;
 	std::map<int, Server*>	_sockets;
 	std::vector<int>		_ready;
-	fd_set					_fd_set;
-	unsigned int			_fd_size;
 	int						_max_fd;
+	unsigned int			_fd_size;
+	fd_set					_write;
+	fd_set					_read;
+
+	void	_synchronize(fd_set *read_current, fd_set *write_current);
+
 };
 
 #endif //SERVICE_HPP
