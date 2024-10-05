@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 17:45:02 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:46:17 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ConfigDefault {
 	t_listen	defaultListen(void) {
 		t_listen listen;
 		listen.port = 80;
-		listen.host = "";
+		listen.host = "0.0.0.0";
 		return (listen);
 	}
 
@@ -59,14 +59,11 @@ namespace ConfigAdd {
 			temp.host = args[0].substr(0, sep);
 			temp.port = std::atoi((args[0].substr(sep + 1, args[0].length()).c_str()));
 		} else {
-			temp.port = 80;
 			if (args[0].find(".") != std::string::npos || args[0] == "localhost")
 				temp.host = args[0];
 			else
 				temp.port = std::atoi(args[0].c_str());
 		}
-		if (temp.host.empty())
-			temp.host = "0.0.0.0";
 		if(temp.host == "localhost")
 			temp.host = LOCALHOST;
 		std::vector<t_listen> listen = server->getListen();

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 17:34:15 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/05 02:28:16 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include <string>
 # include <limits>
 # include <cstdio>
+# include <csignal>
 
 // CPP Containers
 # include <map>
