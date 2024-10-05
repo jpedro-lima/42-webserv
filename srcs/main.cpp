@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: joao <joao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 09:56:13 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 17:35:02 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/04 23:07:14 by joao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int main(int argc, const char **argv) {
 	}
 	try {
 		Service	service;
-		service.config(argv[1]);
-		service.setup();
-		service.run();
-		service.clear();
+		service.config(argv[1])
+			   .setup()
+			   .run()
+			   .clear();
 	}
 	catch (std::exception &e) {
 		std::cerr << RED << e.what() << RESET << std::endl;

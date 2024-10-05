@@ -22,10 +22,10 @@ public:
 	~Service(void);
 	Service(void);
 
-	void	config(const char *filePath);
-	void	setup(void);
-	void	run(void);
-	void	clear(void);
+	Service&	config(const char *filePath);
+	Service&	setup(void);
+	Service&	run(void);
+	Service&	clear(void);
 
 	const Config	&getConfig(void) const;
 private:

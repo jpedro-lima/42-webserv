@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Service.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: joao <joao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:30 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 22:52:13 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/04 23:07:02 by joao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ Service::~Service(void) {}
 
 Service::Service(void) {}
 
-void	Service::config(const char *filePath) {
+Service&	Service::config(const char *filePath) {
 	Config temp(filePath);
 	this->_config = temp;
+
+	return *this;
 }
 
-void	Service::setup(void) {
+Service&	Service::setup(void) {
 	std::vector<t_listen>	listens = this->_config.getAllListens();
 
 	FD_ZERO(&_fd_set);
@@ -43,14 +45,20 @@ void	Service::setup(void) {
 	}
 	if (_max_fd == 0)
 		throw Exceptions::ExceptionServiceServer();
+
+	return *this;
 }
 
-void	Service::run(void) {
+Service&	Service::run(void) {
 	std::cout << "Wow RUNNING" << std::endl;
+
+	return *this;
 }
 
-void	Service::clear(void) {
+Service&	Service::clear(void) {
 	std::cout << "Wow Cleanning" << std::endl;
+
+	return *this;
 }
 
 //GET
