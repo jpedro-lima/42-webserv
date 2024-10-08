@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/02 14:03:50 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:59:39 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CONFIGSERVER_HPP
 
 # include "Webserv.hpp"
-# include "ConfigServerUtils.hpp"
 
 typedef	std::vector<std::string>	fileVector;
 typedef struct	s_listen			t_listen;
@@ -70,5 +69,25 @@ private:
 	parseMap	_initParseMap();
 };
 
+// NAMESPACES
+namespace ConfigDefault {
+	std::map<int, std::string>	defaultErrorPages(void);
+	t_listen					defaultListen(void);
+	std::set<std::string>		defaultAllowMethods(void);
+};
+
+namespace ConfigAdd {
+	void	addListen(ConfigServer *server, fileVector args);
+	void	addRoot(ConfigServer *server, fileVector args);
+	void	addServerName(ConfigServer *server, fileVector args);
+	void	addErrorPages(ConfigServer *server, fileVector args);
+	void	addClientBodyBufferSize(ConfigServer *server, fileVector args);
+	void	addAllowedMethods(ConfigServer *server, fileVector args);
+	void	addIndex(ConfigServer *server, fileVector args);
+	void	addAutoIndex(ConfigServer *server, fileVector args);
+	void	addLocation(ConfigServer *server, fileVector args);
+//	void	addCGIParam(ConfigServer *server, fileVector args);
+//	void	addCGIPass(ConfigServer *server, fileVector args);
+};
 
 #endif //CONFIGSERVER_HPP

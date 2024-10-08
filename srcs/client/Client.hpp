@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ServiceUtils.hpp                                   :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 15:48:19 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/04 15:49:18 by joapedr2         ###   ########.fr       */
+/*   Created: 2024/10/05 19:02:40 by joapedr2          #+#    #+#             */
+/*   Updated: 2024/10/07 22:02:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVICE_UTILS
-# define SERVICE_UTILS
+#ifndef CLIENT_HPP
+# define CLIENT_HPP
 
 # include "Webserv.hpp"
 
-namespace ServiceUtils {
+class Client {
+public:
+	~Client(void);
+	Client(void);
+
 	
+private:
+	int			_socket;
+	Server		*_server;
+	bool		_ready;
+	std::string	_request;
+	std::string	_response;
 };
 
-#endif //SERVICE_UTILS
+#endif //CLIENT_HPP

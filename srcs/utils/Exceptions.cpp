@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/03 17:24:55 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/06 03:25:12 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,9 @@ const char	*Exceptions::ExceptionServerListen::what() const throw() {
 }
 
 const char	*Exceptions::ExceptionServiceServer::what() const throw() {
-	return "Exception Server: Could not setup Server services.";
+	return "Exception Serverice: Could not setup Server services.";
+}
+
+const char	*Exceptions::FailedReadClientRequest::what() const throw() {
+	return "Exception Server: Read Client Request error, closing connection.";
 }

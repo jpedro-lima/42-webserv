@@ -6,23 +6,23 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/04 15:46:17 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/06 02:35:09 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ConfigServerUtils.hpp"
+#include "ConfigServer.hpp"
 
 namespace ConfigDefault {
 
 	std::map<int, std::string>	defaultErrorPages(void) {
 		std::map<int, std::string> errorPages;
-		errorPages[400] = "./400.html";
-		errorPages[403] = "./403.html";
-		errorPages[404] = "./404.html";
-		errorPages[405] = "./405.html";
-		errorPages[410] = "./410.html";
-		errorPages[413] = "./413.html";
-		errorPages[500] = "./500.html";
+		errorPages[400] = "./default/error_pages/400.html";
+		errorPages[403] = "./default/error_pages/403.html";
+		errorPages[404] = "./default/error_pages/404.html";
+		errorPages[405] = "./default/error_pages/405.html";
+		errorPages[410] = "./default/error_pages/410.html";
+		errorPages[413] = "./default/error_pages/413.html";
+		errorPages[500] = "./default/error_pages/500.html";
 		return (errorPages);
 	}
 

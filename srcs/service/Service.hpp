@@ -17,8 +17,11 @@
 # include "Config.hpp"
 # include "Server.hpp"
 
-#include <stdio.h>
-#include <string.h>
+typedef struct	s_client {
+	int		socket;
+	Server	*server;
+	bool	ready;
+}				t_client;
 
 class Service {
 public:
@@ -30,17 +33,27 @@ public:
 	void	run(void);
 	void	clear(void);
 
-	const Config	&getConfig(void) const;
+	//SET
+	void	setMaxFd(int fd);
+
+	//GET
+	Config	getConfig(void) const;
+	int		getMaxFd(void) const;
+
+	//Utils
+	void	updateMaxFd(int fd);
+	void	setDefaultReadServers(void);
+
 private:
 
 	Config					_config;
 	std::map<int, Server>	_servers;
-	std::map<int, Server*>	_sockets;
-	std::vector<int>		_ready;
-	int						_max_fd;
-	unsigned int			_fd_size;
-	fd_set					_write;
-	fd_set					_read;
+	std::vector<t_client>	_clients;
+
+	int				_max_fd;
+	unsigned int	_fd_size;
+	fd_set			_read;
+	fd_set			_write;
 
 	void	_synchronize(fd_set *read_current, fd_set *write_current);
 

@@ -6,16 +6,16 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/05 02:28:16 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:32:11 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WEBSERV_HPP
 # define WEBSERV_HPP
 
-#ifndef LOCALHOST
-# define LOCALHOST	"127.0.0.1"
-#endif //LOCALHOST
+# define LOCALHOST		"127.0.0.1"
+# define RECV_SIZE		65536
+# define CGI_BUFSIZE	65536
 
 // Colors
 # define RED	"\033[31m"
@@ -41,6 +41,7 @@
 # include <limits>
 # include <cstdio>
 # include <csignal>
+# include <cstring>
 
 // CPP Containers
 # include <map>
