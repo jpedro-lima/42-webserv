@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/15 21:35:57 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:22:36 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ parseMap ConfigServer::_initParseMap() {
 	myMap["location"] = &ConfigAdd::addLocation;
 	myMap["cgi_param"] = &ConfigAdd::addCGIParam;
 	myMap["cgi_pass"] = &ConfigAdd::addCGIPass;
+	myMap["return"] = &ConfigAdd::addRedirect;
 	return (myMap);
 }
 
@@ -70,14 +71,22 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 			if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
 				if (!directive.empty()) {
 					this->_serverParsingMap[directive](this, args);
+					directive = "";
 					args.clear();
 				}
 				directive = file[(*index)];
 				if (directive == "location") {
-					while (file[++(*index)] != "}")
+					int	CurlyBrackets = 1;
+					while (CurlyBrackets) {
+						if (file[++(*index)] == "}")
+							CurlyBrackets--;
+						if (file[*index] == "location")
+							CurlyBrackets++;	
 						args.push_back(file[*index]);
-					args.push_back(file[*index]);
+					}
 					this->_serverParsingMap["location"](this, args);
+					args.clear();
+					directive = "";
 				}
 			}
 			else if (file[*index] == "}") {
@@ -91,6 +100,7 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 				args.push_back(file[*index]);
 		}
 	} catch (const std::exception &) {throw;}
+	std::cout << GREEN << *this <<RESET << std::endl;
 }
 
 //SET
@@ -105,7 +115,10 @@ void	ConfigServer::setAutoIndex(bool autoIndex) {this->_autoindex = autoIndex;}
 void	ConfigServer::setLocation(std::map<std::string, ConfigServer> location) {this->_location = location;}
 void	ConfigServer::setCGIParam(std::map<std::string, std::string> cgiParam) {this->_cgi_param = cgiParam;}
 void	ConfigServer::setCGIPass(std::string cgiPass) {this->_cgi_pass = cgiPass;}
-//GET
+void	ConfigServer::setRedirect(std::pair<int, std::string> redirect) {this->_redirect = redirect;}
+
+
+//GETTERS
 const std::vector<t_listen>					&ConfigServer::getListen(void) const {return (this->_listen);}
 const std::string							&ConfigServer::getRoot(void) const {return (this->_root);}
 const std::vector<std::string>				&ConfigServer::getServerName(void) const {return (this->_server_name);}
@@ -118,6 +131,7 @@ const std::map<std::string, ConfigServer>	&ConfigServer::getLocation(void) const
 const parseMap								&ConfigServer::getServerParsingMap(void) const {return (this->_serverParsingMap);}
 const std::map<std::string, std::string>	&ConfigServer::getCGIParam(void) const {return(this->_cgi_param);}
 const std::string							&ConfigServer::getCGIPass(void) const {return(this->_cgi_pass);}
+const std::pair<int, std::string>			&ConfigServer::getRedirect(void) const {return(this->_redirect);}
 
 ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::string &retLocationPath) {
 	std::string::size_type	tryLen = path.length();
@@ -135,22 +149,17 @@ ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::st
 			tryLen--;
 		} while (tryLen);
 	}
-	
 	if (path.find(".py") != std::string::npos) {
 		iter = this->_location.find("*.py");
 		return (iter->second);
 	}
-	if (path.find(".php") != std::string::npos) {
+	else if (path.find(".php") != std::string::npos) {
 		iter = this->_location.find("*.php");
 		return (iter->second);
 	}
-//	std::cout << GREY << *this << "\n" << retLocationPath << RESET << std::endl;
+	std::cout << GREY << *this <<RESET << std::endl;
 	return (*this);
 }
-
-//ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::string &retLocationPath) {
-	
-//}
 
 //STREAM
 std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
@@ -189,12 +198,18 @@ std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
 	for (std::map<std::string, ConfigServer>::const_iterator i = server._location.begin(); i != server._location.end(); i++) {
 		out << std::endl << "LOCATION: " << i->first << std::endl;
 		out << i->second << std::endl;
+		if (i->second._location.size() > 0) {
+			for (std::map<std::string, ConfigServer>::const_iterator j = i->second._location.begin(); j != i->second._location.end(); j++) {
+				out <<"\t"<< std::endl << "LOCATION INTERN: " << j->first << std::endl;
+				out <<"\t"<< j->second << std::endl;
+			}
+		}
 	}
-	
-	// out << "cgi_param:" << std::endl;
-	// for (std::map<std::string, std::string>::const_iterator i = server._cgi_param.begin(); i != server._cgi_param.end(); i++)
-	// 	out << "\t" << i->first << " = " << i->second << std::endl;
-	// out << "cgi_pass:	" << server._cgi_pass << std::endl;
+	sleep(5);
+	out << "cgi_param:" << std::endl;
+	for (std::map<std::string, std::string>::const_iterator i = server._cgi_param.begin(); i != server._cgi_param.end(); i++)
+	 	out << "\t" << i->first << " = " << i->second << std::endl;
+	out << "cgi_pass:	" << server._cgi_pass << std::endl;
 
 	return (out);
 }

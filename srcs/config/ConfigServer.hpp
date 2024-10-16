@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 21:18:50 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:00:12 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ public:
 	void	setLocation(std::map<std::string, ConfigServer> location);
 	void	setCGIParam(std::map<std::string, std::string> cgiParam);
 	void	setCGIPass(std::string cgiPass);
+	void	setRedirect(std::pair<int, std::string> redirect);
+
 //GETTERS
 	const std::vector<t_listen>					&getListen(void) const;
 	const std::string							&getRoot(void) const;
@@ -54,6 +56,7 @@ public:
 	const parseMap								&getServerParsingMap(void) const;
 	const std::map<std::string, std::string>	&getCGIParam(void) const;
 	const std::string							&getCGIPass(void) const;
+	const std::pair<int, std::string>			&getRedirect(void) const;
 
 	ConfigServer	getLocationForRequest(std::string const path, std::string &locationPath);
 
@@ -75,6 +78,7 @@ private:
 	std::map<std::string, ConfigServer>	_location;
 	std::map<std::string, std::string>	_cgi_param;
 	std::string							_cgi_pass;
+	std::pair<int, std::string>			_redirect;
 
 	parseMap	_initParseMap();
 };
@@ -98,6 +102,7 @@ namespace ConfigAdd {
 	void	addLocation(ConfigServer *server, fileVector args);
 	void	addCGIParam(ConfigServer *server, fileVector args);
 	void	addCGIPass(ConfigServer *server, fileVector args);
+	void	addRedirect(ConfigServer *server, fileVector args);
 };
 
 #endif //CONFIGSERVER_HPP

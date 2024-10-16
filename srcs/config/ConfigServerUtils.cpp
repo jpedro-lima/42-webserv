@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 22:20:44 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:17:59 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,18 +175,25 @@ namespace ConfigAdd {
 					if (!directive.empty()) {
 						locationParsingMap[directive](&temp, locationArgs);
 						locationArgs.clear();
+						directive = "";
 					}
 					directive = args[index];
 					if (directive == "location") {
-						while (args[++index] != "}")
+						int	CurlyBrackets = 1;
+						while (CurlyBrackets) {
+							if (args[++index] == "}")
+								CurlyBrackets--;
+							if (args[index] == "location")
+								CurlyBrackets++;	
 							locationArgs.push_back(args[index]);
-						locationArgs.push_back(args[index]);
+						}
 						locationParsingMap[directive](&temp, locationArgs);
+						locationArgs.clear();
+						directive = "";
 					}
 				}
 				else if (args[index] == "}") {
-					if (directive.empty())
-						throw Exceptions::ExceptionInvalidLocationMethod();
+					
 					if (!locationArgs.empty())
 						locationParsingMap[directive](&temp, locationArgs);
 					break ;
@@ -212,6 +219,12 @@ namespace ConfigAdd {
 		if (args.size() != 1)
 			throw Exceptions::ExceptionInvalidCGIPassArgs();
 		server->setCGIPass(args[0]);
+	}
+
+	void	addRedirect(ConfigServer *server, fileVector args) {
+		if (args.size() != 2)
+			throw Exceptions::ExceptionInvalidReturnArgs();
+		server->setRedirect(std::make_pair(atoi(args[0].c_str()), args[1]));
 	}
 
 }
