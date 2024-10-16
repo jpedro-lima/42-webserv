@@ -6,7 +6,7 @@
 #    By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/22 03:16:02 by joapedr2          #+#    #+#              #
-#    Updated: 2024/10/13 03:34:24 by joapedr2         ###   ########.fr        #
+#    Updated: 2024/10/16 16:32:47 by joapedr2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ $(OBJS_DIR)%.o: $(SRC_DIR)%.cpp
 	@echo "$(GREY)Compiling...	$(GREY)$<$(RESET)"
 	@$(CPP) $(CFLAGS) $(HEADERS) -c $< -o $@
 
+
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(addprefix $(OBJS_DIR)/,$(UTILS_DIR))
@@ -86,6 +87,6 @@ fclean: clean
 re:	fclean $(NAME)
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --track-origins=yes -q ./$(NAME) ./tests/basic.conf
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-origins=yes ./$(NAME) ./tests/basic.conf
 	
 .PHONY: all clean fclean re valgrind

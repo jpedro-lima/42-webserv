@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:24:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/15 18:00:08 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:45:10 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ResponseHeader::initErrorMap() {
 	this->_errors[405] = "Method Not Allowed";
 	this->_errors[413] = "Payload Too Large";
 	this->_errors[500] = "Internal Server Error";
+	this->_errors[301] = "Moved Permanently";
 }
 
 std::string	ResponseHeader::getHeader(size_t size, const std::string& path, \

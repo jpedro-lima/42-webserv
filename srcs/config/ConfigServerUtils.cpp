@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:17:59 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:27:23 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,25 +175,18 @@ namespace ConfigAdd {
 					if (!directive.empty()) {
 						locationParsingMap[directive](&temp, locationArgs);
 						locationArgs.clear();
-						directive = "";
 					}
 					directive = args[index];
 					if (directive == "location") {
-						int	CurlyBrackets = 1;
-						while (CurlyBrackets) {
-							if (args[++index] == "}")
-								CurlyBrackets--;
-							if (args[index] == "location")
-								CurlyBrackets++;	
+						while (args[++index] != "}")
 							locationArgs.push_back(args[index]);
-						}
+						locationArgs.push_back(args[index]);
 						locationParsingMap[directive](&temp, locationArgs);
-						locationArgs.clear();
-						directive = "";
 					}
 				}
 				else if (args[index] == "}") {
-					
+					if (directive.empty())
+						throw Exceptions::ExceptionInvalidLocationMethod();
 					if (!locationArgs.empty())
 						locationParsingMap[directive](&temp, locationArgs);
 					break ;

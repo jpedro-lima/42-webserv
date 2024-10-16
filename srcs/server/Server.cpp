@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:35 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/15 21:35:42 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 08:38:14 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	Server::processRequest(int socket, Config *conf) {
  	}
 }
 
-void		Server::processChunk(int socket)
+void	Server::processChunk(int socket)
 {
 	std::string	head = this->_requests[socket].substr(0, this->_requests[socket].find("\r\n\r\n"));
 	std::string	chunks = this->_requests[socket].substr(this->_requests[socket].find("\r\n\r\n") + 4, this->_requests[socket].size() - 1);
@@ -97,7 +97,7 @@ void		Server::processChunk(int socket)
 	this->_requests[socket] = head + "\r\n\r\n" + body + "\r\n\r\n";
 }
 
-//Utils
+//UTILS
 void	Server::close(int socket) {
 	if (socket > 0)
 		::close(socket);
@@ -113,7 +113,6 @@ void	Server::sendResponse(int socket) {
 	}
 	if (size == (int)str.length())
 		_requests.erase(socket);
-
 }
 
 void	Server::clear(void) {

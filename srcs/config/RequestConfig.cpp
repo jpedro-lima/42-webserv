@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 20:54:31 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 22:56:09 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:15:41 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ RequestConfig::RequestConfig(ConfigServer &config, Request &request, \
 	_cgi_pass(config.getCGIPass()),
 	_allowed_methods(config.getAllowedMethods()),
 	_lang(""),
-	_autoindex(config.getAutoIndex())
+	_autoindex(config.getAutoIndex()),
+	_redirect(config.getRedirect())
 {
 	std::string	root = config.getRoot();
 	std::string	ret;
@@ -39,7 +40,7 @@ RequestConfig::RequestConfig(ConfigServer &config, Request &request, \
 			}
 			if (it2 == _index.end())
 				_index.push_back(*it);
-		}
+	}
 	_cgi_param = request.getEnv();
 	if (locationName[0] != '*') {
 		ret = root + path.substr(locationName.length());
@@ -71,6 +72,7 @@ const std::string							&RequestConfig::getLang() const {return (this->_lang);}
 const std::set<std::string>					&RequestConfig::getAllowedMethods() const {return (this->_allowed_methods);}
 const t_listen								&RequestConfig::getHostPort() const {return (this->_hostPort);}
 const bool  								&RequestConfig::getAutoIndex() const {return (this->_autoindex);}
+const std::pair<int, std::string>			&RequestConfig::getRedirect() const {return (this->_redirect);}
 
 //SETTERS
 void	RequestConfig::setPath(int code) {

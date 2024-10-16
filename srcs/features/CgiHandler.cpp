@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 22:15:47 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 21:23:34 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:49:13 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,8 @@ char	**CgiHandler::_getArgs(const std::string& scriptName) {
 	else if (scriptName.find(".py") != std::string::npos)
 		args[0] = strdup("/usr/bin/python3");
 
-	std::cout <<scriptName <<RESET<< std::endl;
 	std::string temp = std::string(server_root) + scriptName;
-	args[1] = new char[temp.length() + 1];
-	args[1] = strcpy(args[1], temp.c_str());
+	args[1] = strdup(temp.c_str());
 	args[2] = NULL;
 	return (args);
 }
@@ -142,9 +140,10 @@ std::string		CgiHandler::executeCgi(const std::string& scriptName) {
 	for (size_t i = 0; env[i]; i++)
 		delete[] env[i];
 	delete[] env;
-	for (size_t i = 0; args[i]; i++)
-		delete[] args[i];
+	delete[] args[0];
+	delete[] args[1];
 	delete[] args;
+	
 	if (!pid)
 		exit(0);
 	return (newBody);

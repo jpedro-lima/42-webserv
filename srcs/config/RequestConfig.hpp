@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 20:43:20 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/11 11:15:37 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:52:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ public:
 	const std::set<std::string>					&getAllowedMethods() const;
 	const t_listen								&getHostPort() const;
 	const bool									&getAutoIndex() const;
+	const std::pair<int, std::string>			&getRedirect() const;
 
 	//SETTERS
 	void	setPath(int code);
@@ -62,6 +63,7 @@ private:
 	std::string							_lang;
 	std::vector<std::string>			_index;
 	bool								_autoindex;
+	std::pair<int, std::string>			_redirect;
 };
 
 #endif //REQUESTCONFIG_HPP

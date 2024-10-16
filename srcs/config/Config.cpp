@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 03:07:41 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/15 16:05:02 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:12:18 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,18 @@ Config	*Config::operator=(const Config *config) {
 		this->_servers = (*config)._servers;
 	return (this);
 }
-// this->_listen,  request.getPath(), request.getHeaders().at("Host"), request.getMethod(), request
-// address, uri, hostName, method, request
-//t_listen const address, std::string const uri, std::string hostName, const std::string& method, Request &request
-RequestConfig	Config::getConfigForRequest(t_listen const address, Request &request) const {
 
-	std::cout << RED << request <<RESET << std::endl;
+RequestConfig	Config::getConfigForRequest(t_listen const address, Request &request) const {
 	std::string	uri = request.getPath();
 	std::string	locationPath;
 	
 	ConfigServer server = this->getServerForRequest(address, request.getHeaders().at("Host"));
 	server = server.getLocationForRequest(uri, locationPath);
-//	server = server.getLocationForRequest(uri, locationPath, request.getHeaders().at("Content-Type"));
 	if (*(--locationPath.end()) == '/')
 		locationPath.resize(locationPath.size() - 1);
 	RequestConfig config(server, request, uri, request.getMethod(), locationPath);
 	
 	config.setHostPort(address);
-//	std::cout << GREEN<< config <<RESET << std::endl;
 	return (config);
 }
 

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 04:17:08 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:14:27 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ const char	*Exceptions::ExceptionInvalidCGIParamArgs::what() const throw() {
 
 const char	*Exceptions::ExceptionInvalidCGIPassArgs::what() const throw() {
 	return "Exception ConfigFile: the argument in CGI Pass is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidReturnArgs::what() const throw() {
+	return "Exception ConfigFile: the argument in return is invalid.";
 }
 
 const char	*Exceptions::ExceptionInvalidLocationMethod::what() const throw() {

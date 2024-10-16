@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 22:58:17 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 13:25:03 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:28:32 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ private:
 	t_listen					_hostPort;
 	std::map<int, std::string>	_errorMap;
 	mapRequest					_method;
+	std::pair<int, std::string>	_redirect;
 
 	mapRequest	_initMethods();
 	void		_setupAllowedMethods(const RequestConfig &requestConf);

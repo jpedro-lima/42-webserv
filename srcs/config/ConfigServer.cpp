@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:22:36 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:29:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,9 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 				}
 				directive = file[(*index)];
 				if (directive == "location") {
-					int	CurlyBrackets = 1;
-					while (CurlyBrackets) {
-						if (file[++(*index)] == "}")
-							CurlyBrackets--;
-						if (file[*index] == "location")
-							CurlyBrackets++;	
+					while (file[++(*index)] != "}")
 						args.push_back(file[*index]);
-					}
+					args.push_back(file[*index]);
 					this->_serverParsingMap["location"](this, args);
 					args.clear();
 					directive = "";
@@ -100,7 +95,6 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 				args.push_back(file[*index]);
 		}
 	} catch (const std::exception &) {throw;}
-	std::cout << GREEN << *this <<RESET << std::endl;
 }
 
 //SET
@@ -157,7 +151,6 @@ ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::st
 		iter = this->_location.find("*.php");
 		return (iter->second);
 	}
-	std::cout << GREY << *this <<RESET << std::endl;
 	return (*this);
 }
 
@@ -198,14 +191,8 @@ std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
 	for (std::map<std::string, ConfigServer>::const_iterator i = server._location.begin(); i != server._location.end(); i++) {
 		out << std::endl << "LOCATION: " << i->first << std::endl;
 		out << i->second << std::endl;
-		if (i->second._location.size() > 0) {
-			for (std::map<std::string, ConfigServer>::const_iterator j = i->second._location.begin(); j != i->second._location.end(); j++) {
-				out <<"\t"<< std::endl << "LOCATION INTERN: " << j->first << std::endl;
-				out <<"\t"<< j->second << std::endl;
-			}
-		}
 	}
-	sleep(5);
+	
 	out << "cgi_param:" << std::endl;
 	for (std::map<std::string, std::string>::const_iterator i = server._cgi_param.begin(); i != server._cgi_param.end(); i++)
 	 	out << "\t" << i->first << " = " << i->second << std::endl;

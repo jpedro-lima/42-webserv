@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 22:58:15 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/14 00:18:14 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:16:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	Response::call(Request & request, RequestConfig &requestConf) {
 	this->_hostPort.host = requestConf.getHostPort().host;
 	this->_hostPort.port = requestConf.getHostPort().port;
 	this->_path = requestConf.getPath();
+	this->_redirect = requestConf.getRedirect();
 	this->_setupAllowedMethods(requestConf);
 
 	if (this->_method.find(request.getMethod()) == this->_method.end())
@@ -47,8 +48,14 @@ void	Response::call(Request & request, RequestConfig &requestConf) {
 		this->_response = this->_header + this->readHtml(this->_errorMap[this->_code]);
 		return ;
 	}
+	if (this->_redirect.first != 0) {
+		this->_code = this->_redirect.first;
+		ResponseHeader	head;
+		this->_header = head.getHeader(this->_response.size(), this->_redirect.second, this->_code, _type, requestConf.getContentLocation(), requestConf.getLang()) + "\r\n";
+		this->_response = this->_header;
+		return ;
+	}
 	(this->*Response::_method[request.getMethod()])(request, requestConf);
-
 }
 
 int	Response::readContent(void) {
