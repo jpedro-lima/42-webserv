@@ -53,7 +53,6 @@ private:
 	int				_max_fd;
 	unsigned int	_fd_size;
 	fd_set			_read;
-	fd_set			_write;
 
 	void	_synchronize(fd_set *read_current, fd_set *write_current);
 

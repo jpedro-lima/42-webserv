@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:43 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/06 03:25:12 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/13 04:17:08 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,14 @@ const char	*Exceptions::ExceptionInvalidIndexArgs::what() const throw() {
 	return "Exception ConfigFile: the argument in Index is invalid.";
 }
 
+const char	*Exceptions::ExceptionInvalidCGIParamArgs::what() const throw() {
+	return "Exception ConfigFile: the argument in CGI Param is invalid.";
+}
+
+const char	*Exceptions::ExceptionInvalidCGIPassArgs::what() const throw() {
+	return "Exception ConfigFile: the argument in CGI Pass is invalid.";
+}
+
 const char	*Exceptions::ExceptionInvalidLocationMethod::what() const throw() {
 	return "Exception ConfigFile: the Method in Location is invalid.";
 }
@@ -98,4 +106,12 @@ const char	*Exceptions::ExceptionServiceServer::what() const throw() {
 
 const char	*Exceptions::FailedReadClientRequest::what() const throw() {
 	return "Exception Server: Read Client Request error, closing connection.";
+}
+
+const char	*Exceptions::ExceptionRequestParse::what() const throw() {
+	return "Exception Request: Request parse failure";
+}
+
+const char	*Exceptions::ExceptionSendResponse::what() const throw() {
+	return "Exception Request: Error sending the response to the client";
 }

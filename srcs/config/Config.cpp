@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 03:07:41 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/05 02:51:41 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:05:02 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	Config::checkServers() {
 	}
 }
 
-// GETS
+// GETTTERS
 std::vector<ConfigServer>	Config::getServers(void) const {return(this->_servers);}
 
 std::vector<t_listen>		Config::getAllListens(void) const {
@@ -75,4 +75,48 @@ Config	*Config::operator=(const Config *config) {
 	if (this != config)
 		this->_servers = (*config)._servers;
 	return (this);
+}
+// this->_listen,  request.getPath(), request.getHeaders().at("Host"), request.getMethod(), request
+// address, uri, hostName, method, request
+//t_listen const address, std::string const uri, std::string hostName, const std::string& method, Request &request
+RequestConfig	Config::getConfigForRequest(t_listen const address, Request &request) const {
+
+	std::cout << RED << request <<RESET << std::endl;
+	std::string	uri = request.getPath();
+	std::string	locationPath;
+	
+	ConfigServer server = this->getServerForRequest(address, request.getHeaders().at("Host"));
+	server = server.getLocationForRequest(uri, locationPath);
+//	server = server.getLocationForRequest(uri, locationPath, request.getHeaders().at("Content-Type"));
+	if (*(--locationPath.end()) == '/')
+		locationPath.resize(locationPath.size() - 1);
+	RequestConfig config(server, request, uri, request.getMethod(), locationPath);
+	
+	config.setHostPort(address);
+//	std::cout << GREEN<< config <<RESET << std::endl;
+	return (config);
+}
+
+ConfigServer	Config::getServerForRequest(t_listen const address, std::string const hostName) const {
+	std::vector<ConfigServer>	possibleServers;
+
+	std::vector<ConfigServer>::const_iterator server;
+	for (server = this->_servers.begin(); server != this->_servers.end(); server++) {
+		std::vector<t_listen>	listens = server->getListen();
+		for (std::vector<t_listen>::iterator listenIter = listens.begin(); listenIter != listens.end(); listenIter++) {
+			if (address.host == (*listenIter).host && address.port == (*listenIter).port)
+				possibleServers.push_back((*server));
+		}
+	}
+	if (possibleServers.empty())
+		throw Exceptions::ExceptionServerListen();
+	for (std::vector<ConfigServer>::iterator serversIter = possibleServers.begin() ; serversIter != possibleServers.end(); serversIter++) {
+		std::vector<std::string>	serverNames = serversIter->getServerName();
+		for (std::vector<std::string>::iterator servNameIter = serverNames.begin() ; servNameIter != serverNames.end(); servNameIter++) {
+			if (*servNameIter == hostName) {
+				return (*serversIter);
+			}
+		}
+	}
+	return (possibleServers[0]);
 }

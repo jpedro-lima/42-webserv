@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/05 18:59:39 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:18:50 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CONFIGSERVER_HPP
 
 # include "Webserv.hpp"
+# include <dirent.h>
 
 typedef	std::vector<std::string>	fileVector;
 typedef struct	s_listen			t_listen;
@@ -24,10 +25,11 @@ class ConfigServer {
 public:
 	~ConfigServer(void);
 	ConfigServer(void);
-	
+	ConfigServer(ConfigServer const *configServer);
+
 	void	parseServer(fileVector file, size_t *index);
 
-//SET
+//SETTERS
 	void	setListen(std::vector<t_listen> listen);
 	void	setRoot(std::string root);
 	void	setServerName(std::vector<std::string> serverName);
@@ -37,7 +39,9 @@ public:
 	void	setIndex(std::vector<std::string> index);
 	void	setAutoIndex(bool autoIndex);
 	void	setLocation(std::map<std::string, ConfigServer> location);
-//GET
+	void	setCGIParam(std::map<std::string, std::string> cgiParam);
+	void	setCGIPass(std::string cgiPass);
+//GETTERS
 	const std::vector<t_listen>					&getListen(void) const;
 	const std::string							&getRoot(void) const;
 	const std::vector<std::string>				&getServerName(void) const;
@@ -48,6 +52,10 @@ public:
 	const bool									&getAutoIndex(void) const;
 	const std::map<std::string, ConfigServer>	&getLocation(void) const;
 	const parseMap								&getServerParsingMap(void) const;
+	const std::map<std::string, std::string>	&getCGIParam(void) const;
+	const std::string							&getCGIPass(void) const;
+
+	ConfigServer	getLocationForRequest(std::string const path, std::string &locationPath);
 
 //STREAM
 	friend std::ostream	&operator<<(std::ostream &out, const ConfigServer &server);
@@ -65,6 +73,8 @@ private:
 	std::vector<std::string>			_index;
 	bool								_autoindex;
 	std::map<std::string, ConfigServer>	_location;
+	std::map<std::string, std::string>	_cgi_param;
+	std::string							_cgi_pass;
 
 	parseMap	_initParseMap();
 };
@@ -86,8 +96,8 @@ namespace ConfigAdd {
 	void	addIndex(ConfigServer *server, fileVector args);
 	void	addAutoIndex(ConfigServer *server, fileVector args);
 	void	addLocation(ConfigServer *server, fileVector args);
-//	void	addCGIParam(ConfigServer *server, fileVector args);
-//	void	addCGIPass(ConfigServer *server, fileVector args);
+	void	addCGIParam(ConfigServer *server, fileVector args);
+	void	addCGIPass(ConfigServer *server, fileVector args);
 };
 
 #endif //CONFIGSERVER_HPP

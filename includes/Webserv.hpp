@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/07 20:32:11 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:20:24 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,25 @@
 # define CGI_BUFSIZE	65536
 
 // Colors
-# define RED	"\033[31m"
-# define GREEN	"\033[32m"
-# define YELLOW	"\033[33m"
-# define BLUE	"\033[34m"
-# define RESET	"\033[0m"
-# define GREY	"\033[38;5;8m"
+# define RED		"\033[31m"
+# define GREEN		"\033[32m"
+# define YELLOW		"\033[33m"
+# define BLUE		"\033[34m"
+# define RESET		"\033[0m"
+# define GREY		"\033[38;5;8m"
+# define MAGENTA	"\033[35m"	
 
 // C Includes
-#include <sys/stat.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+# include <sys/stat.h>
+# include <unistd.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <dirent.h>
+# include <linux/limits.h>
 
 // CPP Includes
 # include <iostream>
@@ -42,6 +48,7 @@
 # include <cstdio>
 # include <csignal>
 # include <cstring>
+# include <algorithm>
 
 // CPP Containers
 # include <map>

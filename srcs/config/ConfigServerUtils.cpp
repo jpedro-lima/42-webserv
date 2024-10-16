@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/06 02:35:09 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:20:44 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ namespace ConfigAdd {
 	void	addRoot(ConfigServer *server, fileVector args){
 		if (args.empty() || server->getRoot() != "")
 			throw Exceptions::ExceptionInvalidRootArgs();
+		
 		server->setRoot(args[0]);
 	}
 
@@ -92,11 +93,20 @@ namespace ConfigAdd {
 	}
 
 	void	addErrorPages(ConfigServer *server, fileVector args){
-		if (args.empty() || args.size() > 2
-			|| !Utils::isdigit(args[0]) || access(args[1].c_str(), F_OK ) == -1)
+		DIR *dir;
+		if (args.empty() || args.size() != 1
+			|| (dir = opendir (args[0].c_str())) == NULL)
 			throw Exceptions::ExceptionInvalidErrorPageArgs();
+
+    	struct dirent *ent;
 		std::map<int, std::string> error_page = server->getErrorPages();
-		error_page[std::atoi(args[0].c_str())] = args[1];
+		while ((ent = readdir (dir)) != NULL) {
+			std::string file = std::string(ent->d_name);
+			std::string code = file.substr(0, file.find_first_of("."));
+			if (Utils::isdigit(code))
+				error_page[atoi(code.c_str())] = args[0] + file;
+		}
+    	closedir (dir);
 		server->setErrorPages(error_page);
 	}
 
@@ -153,13 +163,13 @@ namespace ConfigAdd {
 		fileVector							locationArgs;
 		std::string							directive;
 		parseMap							locationParsingMap;
-		ConfigServer						temp;
-
+		ConfigServer						temp(server);
+	
 		locationParsingMap = server->getServerParsingMap();
 		if (args[1] != "{")
 			throw Exceptions::ExceptionInvalidLocationMethod();
 		try {
-			for (size_t index = 0; index < args.size(); index++)
+			for (size_t index = 2; index < args.size(); index++)
 			{
 				if (locationParsingMap.find(args[index]) != locationParsingMap.end()) {
 					if (!directive.empty()) {
@@ -167,6 +177,12 @@ namespace ConfigAdd {
 						locationArgs.clear();
 					}
 					directive = args[index];
+					if (directive == "location") {
+						while (args[++index] != "}")
+							locationArgs.push_back(args[index]);
+						locationArgs.push_back(args[index]);
+						locationParsingMap[directive](&temp, locationArgs);
+					}
 				}
 				else if (args[index] == "}") {
 					if (directive.empty())
@@ -178,11 +194,24 @@ namespace ConfigAdd {
 				else
 					locationArgs.push_back(args[index]);
 			}
-		} catch (const std::exception &e) {
-			throw ;
-		}
+		} catch (const std::exception &e) {throw ;}
 		std::map<std::string, ConfigServer>	location = server->getLocation();
 		location[args[0]] = temp;
 		server->setLocation(location);
 	}
+
+	void	addCGIParam(ConfigServer *server, fileVector args) {
+		if (args.size() != 2)
+			throw Exceptions::ExceptionInvalidCGIParamArgs();
+		std::map<std::string, std::string> temp;
+		temp[args[0]] = args[1];
+		server->setCGIParam(temp);
+	}
+	
+	void	addCGIPass(ConfigServer *server, fileVector args) {
+		if (args.size() != 1)
+			throw Exceptions::ExceptionInvalidCGIPassArgs();
+		server->setCGIPass(args[0]);
+	}
+
 }

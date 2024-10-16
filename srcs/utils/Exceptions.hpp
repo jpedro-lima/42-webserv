@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 12:37:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/06 03:23:48 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/13 04:16:03 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,16 @@ public:
 		virtual const char	*what() const throw();
 	};
 
+	class	ExceptionInvalidCGIParamArgs: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionInvalidCGIPassArgs: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+	
 	class		ExceptionInvalidClientBodyBufferSize: public std::exception{
 	public:
 		virtual const char	*what() const throw();
@@ -123,6 +133,16 @@ public:
 	};
 
 	class	FailedReadClientRequest: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionRequestParse: public std::exception{
+	public:
+		virtual const char	*what() const throw();
+	};
+
+	class	ExceptionSendResponse: public std::exception{
 	public:
 		virtual const char	*what() const throw();
 	};

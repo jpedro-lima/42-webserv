@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Client.hpp                                         :+:      :+:    :+:   */
+/*   AutoIndexGenerator.hpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 19:02:40 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/07 22:02:33 by joapedr2         ###   ########.fr       */
+/*   Created: 2024/10/11 08:37:49 by joapedr2          #+#    #+#             */
+/*   Updated: 2024/10/11 08:58:34 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLIENT_HPP
-# define CLIENT_HPP
+#ifndef AUTOINDEXGENERATOR_HPP
+# define AUTOINDEXGENERATOR_HPP
 
 # include "Webserv.hpp"
 
-class Client {
+class AutoIndexGenerator {
 public:
-	~Client(void);
-	Client(void);
+	~AutoIndexGenerator(void);
+	AutoIndexGenerator(void);
+	AutoIndexGenerator(AutoIndexGenerator const &src);
 
-	
+	static std::string  getPage(const char *path, std::string const &host, int port);
 private:
-	int			_socket;
-	Server		*_server;
-	bool		_ready;
-	std::string	_request;
-	std::string	_response;
+	static std::string  getLink(std::string const &dirEntry, std::string const &dirName, std::string const &host, int port);
+
 };
 
-#endif //CLIENT_HPP
+#endif //AUTOINDEXGENERATOR_HPP

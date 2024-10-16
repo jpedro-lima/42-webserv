@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/02 14:03:42 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:35:57 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,24 @@ parseMap ConfigServer::_initParseMap() {
 	myMap["index"] = &ConfigAdd::addIndex;
 	myMap["autoindex"] = &ConfigAdd::addAutoIndex;
 	myMap["location"] = &ConfigAdd::addLocation;
-	// myMap["cgi_param"] = &ConfigAdd::addCGIParam;
-	// myMap["cgi_pass"] = &ConfigAdd::addCGIPass;
+	myMap["cgi_param"] = &ConfigAdd::addCGIParam;
+	myMap["cgi_pass"] = &ConfigAdd::addCGIPass;
 	return (myMap);
+}
+
+ConfigServer::ConfigServer(ConfigServer const *configServer) {
+	if (this != configServer) {
+		this->_listen = configServer->getListen();
+		this->_root = configServer->getRoot();
+		this->_index = configServer->getIndex();
+		this->_server_name = configServer->getServerName();
+		this->_error_pages = configServer->getErrorPages();
+		this->_client_body_buffer_size = configServer->getBufferSize();
+		this->_allowed_methods = configServer->getAllowedMethods();
+		this->_autoindex = configServer->getAutoIndex();
+		this->_location.clear();
+		this->_serverParsingMap = configServer->getServerParsingMap();
+	}
 }
 
 void	ConfigServer::parseServer(fileVector file, size_t *index) {
@@ -71,42 +86,12 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 				if (!args.empty())
 					this->_serverParsingMap[directive](this, args);
 				break ;
-			} 
+			}
 			else
 				args.push_back(file[*index]);
 		}
 	} catch (const std::exception &) {throw;}
 }
-
-// void	ConfigServer::_parseLocation(fileVector file, size_t *index) {
-// 	try {
-// 		std::string		locationPath = file[++(*index)];
-// 		if (file[++(*index)] == "{")
-// 			throw Exceptions::ExpectedCurlyBracketsBefore();
-// 		while (++(*index) < file.size())
-// 		{
-// 			if (this->_locationParsingMap.find(file[*index]) != this->_locationParsingMap.end()) {
-// 				if (!directive.empty()) {
-// 					this->_locationParsingMap[directive](this, args);
-// 					args.clear();
-// 				}
-// 				directive = file[(*index)];
-// 			}
-// 			else if (file[*index] == "}") {
-// 				if (!args.empty())
-// 					this->_locationParsingMap[directive](this, args);
-// 				break ;
-// 			} 
-// 			else if(file[*index] == "location")
-// 				throw Exceptions::ExceptionInvalidLocationMethod();
-// 			else
-// 				args.push_back(file[*index]);
-// 		}
-// 	} catch (const std::exception &e) {
-// 		std::cerr << RED << e.what() << RESET << std::endl;
-// 		throw ;
-// 	}
-// }
 
 //SET
 void	ConfigServer::setListen(std::vector<t_listen> listen) {this->_listen = listen;}
@@ -118,7 +103,8 @@ void	ConfigServer::setAllowedMethods(std::set<std::string> methods) {this->_allo
 void	ConfigServer::setIndex(std::vector<std::string> index) {this->_index = index;}
 void	ConfigServer::setAutoIndex(bool autoIndex) {this->_autoindex = autoIndex;}
 void	ConfigServer::setLocation(std::map<std::string, ConfigServer> location) {this->_location = location;}
-
+void	ConfigServer::setCGIParam(std::map<std::string, std::string> cgiParam) {this->_cgi_param = cgiParam;}
+void	ConfigServer::setCGIPass(std::string cgiPass) {this->_cgi_pass = cgiPass;}
 //GET
 const std::vector<t_listen>					&ConfigServer::getListen(void) const {return (this->_listen);}
 const std::string							&ConfigServer::getRoot(void) const {return (this->_root);}
@@ -130,6 +116,41 @@ const std::vector<std::string>				&ConfigServer::getIndex(void) const {return (t
 const bool									&ConfigServer::getAutoIndex(void) const {return (this->_autoindex);}
 const std::map<std::string, ConfigServer>	&ConfigServer::getLocation(void) const {return (this->_location);}
 const parseMap								&ConfigServer::getServerParsingMap(void) const {return (this->_serverParsingMap);}
+const std::map<std::string, std::string>	&ConfigServer::getCGIParam(void) const {return(this->_cgi_param);}
+const std::string							&ConfigServer::getCGIPass(void) const {return(this->_cgi_pass);}
+
+ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::string &retLocationPath) {
+	std::string::size_type	tryLen = path.length();
+	std::map<std::string, ConfigServer>::iterator	iter;
+	std::string	tryLocation;
+
+	if (tryLen && !this->_location.empty()) {
+		do {
+			tryLocation = path.substr(0, tryLen);
+			iter = this->_location.find(tryLocation);
+			if (iter != this->_location.end() && iter->first[0] != '*') {
+				retLocationPath = tryLocation;
+				return iter->second.getLocationForRequest(path, retLocationPath);
+			}	
+			tryLen--;
+		} while (tryLen);
+	}
+	
+	if (path.find(".py") != std::string::npos) {
+		iter = this->_location.find("*.py");
+		return (iter->second);
+	}
+	if (path.find(".php") != std::string::npos) {
+		iter = this->_location.find("*.php");
+		return (iter->second);
+	}
+//	std::cout << GREY << *this << "\n" << retLocationPath << RESET << std::endl;
+	return (*this);
+}
+
+//ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::string &retLocationPath) {
+	
+//}
 
 //STREAM
 std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {

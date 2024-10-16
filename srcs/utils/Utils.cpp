@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:40:52 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/09/29 10:41:48 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/11 08:55:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,105 @@ namespace Utils {
 				return (false);
 		}
 		return (true);
+	}
+
+	std::string	&strip(std::string& str, char c) {
+		size_t	i;
+
+		if (!str.size())
+			return str;
+		i = str.size();
+		while (i && str[i - 1] == c)
+			i--;
+		str.resize(i);
+		for (i = 0; str[i] == c; i++);
+		str = str.substr(i, std::string::npos);
+		return str;
+	}
+	
+	std::string	readValue(const std::string line) {
+		size_t i;
+		std::string	ret;
+
+		i = line.find_first_of(':');
+		i = line.find_first_not_of(' ', i + 1);
+		if (i != std::string::npos)
+			ret.append(line, i, std::string::npos);
+		return (strip(ret, ' '));
+	}
+
+	std::string	readKey(const std::string line) {
+		std::string	ret;
+
+		size_t	i = line.find_first_of(':');
+		ret.append(line, 0 , i);
+		capitalize(ret);
+		return (strip(ret, ' '));
+	}
+	
+	std::string	&capitalize(std::string	&str)
+	{
+
+	//	to_lower(str);
+		for (size_t i = 0; i < str.length(); i++)
+			std::tolower(str[i]);
+		str[0] = std::toupper(str[0]);
+		size_t	find = 0;
+		while((find = str.find_first_of('-', find + 1)) != std::string::npos)
+		{
+			if (find + 1 < str.size())
+			str[find + 1] = std::toupper(str[find + 1]);
+		}
+		return (str);
+	}
+
+	std::string	removeAdjacentSlashes(const std::string &str) {
+		std::string	ret;
+		bool	lastIsSlash = false;
+
+		for (std::string::size_type i = 0; i < str.length(); i++) {
+			if (str[i] == '/') {
+				if (!lastIsSlash)
+					ret.push_back(str[i]);
+				lastIsSlash = true;
+			}
+			else {
+				lastIsSlash = false;
+				ret.push_back(str[i]);
+			}
+		}
+		return (ret);
+	}
+
+	std::vector<std::string>	split(const std::string& str, char c)
+	{
+		std::vector<std::string> tokens;
+		std::string token;
+		std::istringstream tokenStream(str);
+
+		while (std::getline(tokenStream, token, c))
+			tokens.push_back(token);
+		return tokens;
+	}
+
+	int		pathIsFile(const std::string& path) {
+		struct stat s;
+		if (stat(path.c_str(), &s) == 0 )
+		{
+			if (s.st_mode & S_IFDIR)
+				return 0;
+			else if (s.st_mode & S_IFREG)
+				return 1;
+			else
+				return 0;
+		}
+		else
+			return 0;
+	}
+
+	std::string	toString(size_t n) {
+		std::stringstream tmp;
+		tmp << n;
+		return (tmp.str());
 	}
 }

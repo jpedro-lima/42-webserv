@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/07 22:26:02 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/13 03:07:52 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "Webserv.hpp"
 # include "Config.hpp"
+# include "Request.hpp"
+# include "RequestConfig.hpp"
+# include "Response.hpp"
 
 typedef struct s_listen	t_listen;
 struct					sockaddr_in;
@@ -30,13 +33,14 @@ public:
 	void	processRequest(int socket, Config *conf);
 	void	processChunk(int socket);
 	void	sendResponse(int socket);
-	
 
 	void	close(int socket);
-	// void	clean(void);
+	void	clear(void);
 
 	int			getFd(void) const;
 	sockaddr_in	getSockAddr(void) const;
+
+	void	setRequest(std::pair<int, std::string> newRequest);
 
 private:
 	std::map<int, std::string>	_requests;
