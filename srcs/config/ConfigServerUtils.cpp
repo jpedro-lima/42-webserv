@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:02:53 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:27:23 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:55:56 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,13 +178,16 @@ namespace ConfigAdd {
 					}
 					directive = args[index];
 					if (directive == "location") {
+						if (args[index + 1].find("*") == std::string::npos)
+							throw Exceptions::ExceptionInvalidLocationMethod();
 						while (args[++index] != "}")
 							locationArgs.push_back(args[index]);
 						locationArgs.push_back(args[index]);
 						locationParsingMap[directive](&temp, locationArgs);
+						locationArgs.clear();
 					}
 				}
-				else if (args[index] == "}") {
+				else if (args[index] == "}" || args[index] == "};") {
 					if (directive.empty())
 						throw Exceptions::ExceptionInvalidLocationMethod();
 					if (!locationArgs.empty())
@@ -196,15 +199,15 @@ namespace ConfigAdd {
 			}
 		} catch (const std::exception &e) {throw ;}
 		std::map<std::string, ConfigServer>	location = server->getLocation();
-		location[args[0]] = temp;
+		location.insert(std::make_pair(args[0], temp));
 		server->setLocation(location);
 	}
 
 	void	addCGIParam(ConfigServer *server, fileVector args) {
 		if (args.size() != 2)
 			throw Exceptions::ExceptionInvalidCGIParamArgs();
-		std::map<std::string, std::string> temp;
-		temp[args[0]] = args[1];
+		std::map<std::string, std::string> temp = server->getCGIParam();
+		temp.insert(std::make_pair(args[0], args[1]));
 		server->setCGIParam(temp);
 	}
 	

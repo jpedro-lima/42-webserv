@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Uso do cURL com DELETE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #e0e0e0;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guia de Uso do cURL com DELETE</h1>
+    <p>O <strong>cURL</strong> é uma ferramenta de linha de comando usada para transferir dados com URLs. Este guia fornece instruções sobre como usar o método <code>DELETE</code> com cURL para excluir arquivos através de uma API.</p>
+    
+    <h2>Uso Básico do cURL com DELETE</h2>
+    <p>Para enviar uma solicitação DELETE usando cURL, você pode usar o seguinte comando:</p>
+    
+    <pre><code>curl -X DELETE "http://host-atual/delete/?file=ARQUIVO_SELECIONADO"</code></pre>
+    
+    <h3>Explicação do Comando</h3>
+    <ul>
+        <li><code>curl</code>: Chama a ferramenta cURL.</li>
+        <li><code>-X DELETE</code>: Especifica que o método HTTP usado será DELETE.</li>
+        <li><code>"http://host-atual/delete/?file=ARQUIVO_SELECIONADO"</code>: URL da API onde a solicitação será enviada, incluindo o parâmetro de consulta <code>file</code> que indica qual arquivo deve ser deletado.</li>
+    </ul>
+    
+    <h2>Exemplo de Uso</h2>
+    <p>Suponha que você tenha um arquivo chamado <code>meuarquivo.txt</code> que deseja deletar. O comando ficaria assim:</p>
+    
+    <pre><code>curl -X DELETE "http://host-atual/delete/?file=meuarquivo.txt"</code></pre>
+    
+    <h2>Tratamento de Respostas</h2>
+    <p>Após executar o comando, você deve receber uma resposta do servidor. Aqui estão algumas respostas comuns:</p>
+    <ul>
+        <li><strong>200 OK</strong>: O arquivo foi deletado com sucesso.</li>
+        <li><strong>404 Not Found</strong>: O arquivo especificado não foi encontrado.</li>
+        <li><strong>403 Forbidden</strong>: Não tem permissão para deletar o arquivo.</li>
+        <li><strong>500 Internal Server Error</strong>: Ocorreu um erro no servidor ao processar a solicitação.</li>
+    </ul>
+    
+    <h2>Outras Opções do cURL</h2>
+    <p>O cURL também oferece várias opções adicionais que podem ser úteis:</p>
+    <ul>
+        <li><code>-v</code>: Habilita o modo verbose para obter detalhes sobre a solicitação.</li>
+        <li><code>-H "Authorization: Bearer TOKEN"</code>: Envia um cabeçalho de autorização se necessário.</li>
+    </ul>
+    
+    <h2>Conclusão</h2>
+    <p>Agora você sabe como usar o cURL para enviar solicitações DELETE para excluir arquivos de um servidor. Experimente e ajuste os comandos conforme necessário para sua aplicação!</p>
+</body>
+</html>

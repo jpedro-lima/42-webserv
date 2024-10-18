@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:27 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 18:00:12 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:50:49 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 
 typedef	std::vector<std::string>	fileVector;
 typedef struct	s_listen			t_listen;
+
+typedef struct	s_file {
+	fileVector	*file;
+	size_t		index;
+}				t_file;
 
 # define parseMap std::map<std::string, void (*)(ConfigServer *, fileVector)>
 

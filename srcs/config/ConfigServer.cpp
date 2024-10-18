@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:09:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:29:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:59:25 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,19 @@ void	ConfigServer::parseServer(fileVector file, size_t *index) {
 			if (this->_serverParsingMap.find(file[*index]) != this->_serverParsingMap.end()) {
 				if (!directive.empty()) {
 					this->_serverParsingMap[directive](this, args);
-					directive = "";
 					args.clear();
+					directive = "";
 				}
 				directive = file[(*index)];
 				if (directive == "location") {
-					while (file[++(*index)] != "}")
+					while (file[++(*index)] != "};")
 						args.push_back(file[*index]);
 					args.push_back(file[*index]);
 					this->_serverParsingMap["location"](this, args);
 					args.clear();
 					directive = "";
 				}
-			}
-			else if (file[*index] == "}") {
+			} else if (file[*index] == "}") {
 				if (directive.empty())
 					Exceptions::ExceptionInvalidServerMethod();
 				if (!args.empty())
@@ -143,12 +142,17 @@ ConfigServer	ConfigServer::getLocationForRequest(std::string const path, std::st
 			tryLen--;
 		} while (tryLen);
 	}
+
 	if (path.find(".py") != std::string::npos) {
 		iter = this->_location.find("*.py");
+		if (iter == this->_location.end())
+			throw Exceptions::ExceptionInvalidCGIPassArgs();
 		return (iter->second);
 	}
 	else if (path.find(".php") != std::string::npos) {
 		iter = this->_location.find("*.php");
+		if (iter == this->_location.end())
+			throw Exceptions::ExceptionInvalidCGIPassArgs();
 		return (iter->second);
 	}
 	return (*this);
@@ -187,10 +191,17 @@ std::ostream	&operator<<(std::ostream &out, const ConfigServer &server) {
 		out << *i << " ";
 	out << std::endl;
 	
-	// out << "alias: " << server._alias << std::endl;
+
 	for (std::map<std::string, ConfigServer>::const_iterator i = server._location.begin(); i != server._location.end(); i++) {
 		out << std::endl << "LOCATION: " << i->first << std::endl;
 		out << i->second << std::endl;
+		if (i->second.getLocation().size() > 0) {
+			std::map<std::string, ConfigServer>::const_iterator j;
+			for (j = i->second.getLocation().begin(); j != i->second.getLocation().end(); j++) {
+				out << std::endl << "LOCATION INTERN: " << j->first << std::endl;
+				out << j->second << std::endl;
+			}
+		}
 	}
 	
 	out << "cgi_param:" << std::endl;

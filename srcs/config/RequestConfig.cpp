@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 20:54:31 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 19:15:41 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:27:00 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ RequestConfig::RequestConfig(ConfigServer &config, Request &request, \
 			if (it2 == _index.end())
 				_index.push_back(*it);
 	}
-	_cgi_param = request.getEnv();
 	if (locationName[0] != '*') {
 		ret = root + path.substr(locationName.length());
 		this->_contentLocation = Utils::removeAdjacentSlashes(path.substr(locationName.length()));

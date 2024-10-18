@@ -11,6 +11,9 @@ cgitb.enable()
 UPLOAD_DIR = os.getenv('SAVE_INTO', '/tmp/uploads')
 CURRENT_DIR = os.getcwd()
 
+# Cria o diretório de upload, caso não exista
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Processa os dados do formulário
 form = cgi.FieldStorage()
