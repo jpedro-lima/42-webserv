@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 23:53:35 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 08:38:14 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:19:51 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	Server::processRequest(int socket, Config *conf) {
 		std::cout << "\nRequest :" << std::endl;
 		std::cout << YELLOW << _requests[socket] << RESET << std::endl;
 		requestConf = conf->getConfigForRequest(this->_listen, request);
-		
+
 		response.call(request, requestConf);
 		std::cout << "\nResponse :" << std::endl;
 		std::cout << MAGENTA << response.getHeader() <<RESET<< std::endl;

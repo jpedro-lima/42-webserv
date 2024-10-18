@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:26:36 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/16 11:36:38 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:39:35 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	Response::getMethod(Request & request, RequestConfig & requestConf) {
 	if (this->_code == 500)
 		this->_response = this->readHtml(_errorMap[this->_code]);
 
-	this->_header = head.getHeader(this->_response.size(), _path, this->_code, _type, requestConf.getContentLocation(), requestConf.getLang()) + "\r\n";
+	this->_header = head.getHeader(this->_response.size(), this->_path, this->_code, this->_type, requestConf.getContentLocation(), requestConf.getLang()) + "\r\n";
 	this->_response = this->_header + this->_response;
 }
 
@@ -50,7 +50,7 @@ void	Response::headMethod(Request & request, RequestConfig & requestConf) {
 	ResponseHeader	head;
 	
 	this->_code = readContent();
-	this->_header = head.getHeader(this->_response.size(), _path, this->_code, _type, requestConf.getContentLocation(), requestConf.getLang()) + "\r\n";
+	this->_header = head.getHeader(this->_response.size(), this->_path, this->_code, this->_type, requestConf.getContentLocation(), requestConf.getLang()) + "\r\n";
 	this->_response = this->_header;
 }
 
@@ -102,16 +102,25 @@ void	Response::putMethod(Request & request, RequestConfig &requestConf) {
 	this->_response = this->_header + this->_response;
 }
 
-
 void	Response::deleteMethod(Request & request, RequestConfig & requestConf) {
 	ResponseHeader	head;
 	(void)request;
 
-	this->_response = "";
-	if (Utils::pathIsFile(this->_path))
+	std::string pathFile = request.getQuery();
+	if (pathFile.find("file=") != std::string::npos) {
+		if (remove(pathFile.erase(0, 5).c_str()) == 0) {
+			this->_response = "The file sent has been deleted.\n";
+			this->_code = 200;
+		}
+		else
+			this->_code = 403;
+	}
+	else if (Utils::pathIsFile(this->_path))
 	{
-		if (remove(this->_path.c_str()) == 0)
-			this->_code = 204;
+		if (remove(this->_path.c_str()) == 0) {
+			this->_response = "The file sent has been deleted.";
+			this->_code = 200;
+		}
 		else
 			this->_code = 403;
 	}

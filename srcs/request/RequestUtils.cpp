@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 20:58:51 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 01:57:04 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:20:29 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,15 +207,13 @@ void	Request::findQuery() {
 	size_t		i;
 
 	i = this->_path.find_first_of('?');
-	if (i != std::string::npos)
-	{
+	if (i != std::string::npos) {
 		this->_query.assign(this->_path, i + 1, std::string::npos);
 		this->_path = this->_path.substr(0, i);
 	}
 }
 
 std::string	Request::formatHeaderForCGI(std::string& key) {
-//	to_upper(key);
 	std::transform(key.begin(), key.end(), key.begin(), ::toupper);
 	for (size_t i = 0 ; i < key.size() ; i++) {
 		if (key[i] == '-')
