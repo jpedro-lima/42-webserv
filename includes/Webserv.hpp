@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:03:06 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/13 20:20:24 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/20 20:48:46 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <linux/limits.h>
+# include <sys/time.h>
 
 // CPP Includes
 # include <iostream>

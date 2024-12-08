@@ -6,7 +6,7 @@
 #    By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/22 03:16:02 by joapedr2          #+#    #+#              #
-#    Updated: 2024/10/16 16:32:47 by joapedr2         ###   ########.fr        #
+#    Updated: 2024/12/08 15:10:04 by joapedr2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,10 @@ fclean: clean
 
 re:	fclean $(NAME)
 
+test:
+	./$(NAME) ./tests/webserv.conf
+
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-origins=yes ./$(NAME) ./tests/basic.conf
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-origins=yes ./$(NAME) 
 	
 .PHONY: all clean fclean re valgrind

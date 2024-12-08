@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 14:40:52 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/10/11 08:55:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/10/21 01:45:16 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@ namespace Utils {
 	std::string	&capitalize(std::string	&str)
 	{
 
-	//	to_lower(str);
 		for (size_t i = 0; i < str.length(); i++)
-			std::tolower(str[i]);
+			str[i] = std::tolower(str[i]);
 		str[0] = std::toupper(str[0]);
 		size_t	find = 0;
 		while((find = str.find_first_of('-', find + 1)) != std::string::npos)
